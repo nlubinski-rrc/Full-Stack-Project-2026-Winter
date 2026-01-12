@@ -24,9 +24,4 @@ function Nav() {
     </nav>);
 }
 
-function Footer() {
-    return(<footer>Hello</footer>)
-}
-
 export default Nav;
-//export default Footer;
