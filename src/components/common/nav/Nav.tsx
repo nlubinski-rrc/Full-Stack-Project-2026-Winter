@@ -7,13 +7,10 @@ function Nav() {
                 <a href="#">Home</a>
             </span>
             <span>
-                <a href="#">Top Terms</a>
+                <a href="#">Top Movies</a>
             </span>
             <span>
-                <a href="#">My Terms</a>
-            </span>
-            <span>
-                <a href="#">My Contexts</a>
+                <a href="#">My List</a>
             </span>
         </div>
         <div className="user-management-links">
