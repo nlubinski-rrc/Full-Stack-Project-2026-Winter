@@ -3,9 +3,7 @@ import './Footer.css';
 function Footer() {
     return(
         <footer>
-            <div>Nolan</div>
-            <div>Dylan</div>
-            <div>Nick</div>
+            <div>Nolan Dylan and Nick</div>
         </footer>
     )
 }
