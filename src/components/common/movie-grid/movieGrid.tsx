@@ -5,8 +5,12 @@ function MovieGrid() {
 
     const movieListItems = movieData["results"].map((movie) => {
         return (
-            <div>
-                {movie.title}
+            <div className="movieCard">
+                <h3 className="cardTitle">
+                    {movie.title}
+                </h3>
+                <div>Rating: {movie.vote_average}</div>
+                <div>{movie.overview}</div>
             </div>
         );
     });
