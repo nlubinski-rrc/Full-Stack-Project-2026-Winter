@@ -3,7 +3,6 @@
     justify-content: flex-end;
     flex-direction: column;
     align-items: center;
-    margin-top: 4%;
     margin-left: auto;
     padding-left: 6%;
     padding-right: 6%;
@@ -11,11 +10,10 @@
     border: 3px solid #151B25;
     background-color: #214358;
     border-radius: 10px;
-    max-width: 300px;
+    height: fit-content;
 }
 
 h1 {
-    color: #9CA6B8;
     font-family: 'Title-Text';
     text-decoration: underline;
 }
