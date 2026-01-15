@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Regular-Text';
+    src: url('./assets/fonts/regular-text-DM_Serif_Text/DMSerifText-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Title-Text';
+    src: url('./assets/fonts/title-text-Zalando/ZalandoSansExpanded-VariableFont_wght.ttf');
+}
+
+@font-face {
+    font-family: 'Footer-Text';
+    src: url('./assets/fonts/footer-text-Roboto-Condensed/RobotoCondensed-VariableFont_wght.ttf');
+}
