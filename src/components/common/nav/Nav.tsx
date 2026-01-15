@@ -1,0 +1,24 @@
+import "./Nav.css";
+
+function Nav() {
+    return(<nav>
+        <div className="page-links">
+            <span>
+                <a href="#">Home</a>
+            </span>
+            <span>
+                <a href="#">Top Movies</a>
+            </span>
+            <span>
+                <a href="#">My List</a>
+            </span>
+        </div>
+        <div className="user-management-links">
+            <span>
+                <a href="#">Log In</a>
+            </span>
+        </div>
+    </nav>);
+}
+
+export default Nav;

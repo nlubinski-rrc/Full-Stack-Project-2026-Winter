@@ -1,0 +1,21 @@
+#topFiveMovies {
+    background-color: #214358;
+    border: .3em;
+    padding: 1em;
+    border-radius: 1.5em;
+    border-style: solid;
+    border-color: #9CA6B8;
+    top: 10em;
+    height: fit-content;
+}
+ol {
+    font-family: "Regular-Text";
+}
+ol li {
+    padding-top: 1rem;
+}
+h2 {
+    text-align: center;
+    font-family: "Title-Text";
+    text-decoration: underline;
+}
