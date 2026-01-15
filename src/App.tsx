@@ -11,10 +11,12 @@ function App() {
   return (
     <>
       <Nav />
-      <MovieGrid />
-      <TopReviewersSideBar />
+      <section id='main-section'>
+        <LeftSideBar movies={movies} />
+        <MovieGrid />
+        <TopReviewersSideBar />
+      </section>
       <Footer /> 
-      <LeftSideBar movies={movies} />
 
     </>
   );

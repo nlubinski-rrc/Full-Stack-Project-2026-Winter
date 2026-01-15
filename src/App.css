@@ -1,6 +1,9 @@
-h1 {
-  color: red;
-}
 body {
     background-color: #151B25;
+}
+#main-section {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-gap: 1rem;
+  
 }
