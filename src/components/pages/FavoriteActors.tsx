@@ -6,7 +6,7 @@ type Actor = {
     isFavorite: boolean
 }
 
-function FavoriteActorPage() {
+function FavoriteActorsPage() {
     const [actors, setActors] = useState<Actor[]>([
         {id: 1, name: "Ryan Gosling", isFavorite: false},
         {id: 2, name: "Harrison Ford", isFavorite: false},
@@ -18,4 +18,4 @@ function FavoriteActorPage() {
     return(<></>)
 }
 
-export default FavoriteActorPage;
+export default FavoriteActorsPage;
