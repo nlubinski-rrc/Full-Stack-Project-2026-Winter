@@ -2,13 +2,14 @@ import "./watchlist.css"
 import MovieCard from "../../common/movieCard/movieCard"
 import movieData from "../../../../testMovieData.json";
 import type { Watchlist } from "../../../assets/types/watchlistType";
+import MovieSearchBar from "../../common/searchBar/searchBar";
 
 type watchListProps = {
     watchlist: Watchlist
     setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>
 }
 
-function WatchlistPage({ watchlist }: watchListProps) {
+function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
 
     let movieListItems
 
@@ -31,7 +32,11 @@ function WatchlistPage({ watchlist }: watchListProps) {
     return (
         <div id="watchlist-page">
             <h1 id="title-header">My Watchlist</h1>
-            <div id="movies">{movieListItems}</div>
+            <div id="search-and-watchlist">
+                <MovieSearchBar addItemToList={setWatchlist}/>
+                <div id="movies">{movieListItems}</div>
+            </div>
+            
         </div>
     )
 }

@@ -13,3 +13,18 @@ p {
     color: white;
     font-family: "Regular-Text";
 }
+
+#movies {
+    padding-top: 5%;
+    padding-left: 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 50em;
+    gap: 1em;
+}
+
+#search-and-watchlist {
+    display: flex;
+    align-items: flex-start;
+}
