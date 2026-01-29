@@ -1,5 +1,5 @@
 import "./watchedmovies.css";
-import { useState } from "react";
+import { useState } from 'react';
 
 interface Movie {
   title: string;
@@ -9,6 +9,8 @@ interface Movie {
 }
 
 function WatchedMovies() {
+  const [searchTerm, setSearchTerm] = useState("");
+  
   const [movies, setMovies] = useState<Movie[]>([
     {
       title: "Inception",
@@ -26,9 +28,16 @@ function WatchedMovies() {
       title: "Jurassic Park",
       vote_average: 8.2,
       overview: "Dinosaurs cloned using ancient DNA",
-      watched: false
+      watched: true
     }
   ]);
+
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const watchedMovies = filteredMovies.filter(movie => movie.watched === true);
+  const unwatchedMovies = filteredMovies.filter(movie => !movie.watched);
 
   const toggleWatched = (index: number) => {
     setMovies(movies.map((movie, i) => 
@@ -36,19 +45,24 @@ function WatchedMovies() {
     ));
   };
 
-  const watchedMovies = movies.filter(movie => movie.watched);
-  const unwatchedMovies = movies.filter(movie => !movie.watched);
-
   return (
     <>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search movies (e.g. Inception)..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}  // Real-time update!
+      />
+
       <h2>Watched Movies ({watchedMovies.length})</h2>
       <div className="movie-grid">
-        {watchedMovies.map((movie, index) => (
+        {watchedMovies.map((movie) => (
           <div key={movie.title} className="movie-card watched">
             <h3>{movie.title}</h3>
             <div>Rating: {movie.vote_average}</div>
             <div>{movie.overview}</div>
-            <button onClick={() => toggleWatched(index)}>
+            <button onClick={() => toggleWatched(movies.indexOf(movie))}>
               Mark Unwatched
             </button>
           </div>
@@ -57,12 +71,12 @@ function WatchedMovies() {
 
       <h2>To Watch ({unwatchedMovies.length})</h2>
       <div className="movie-grid">
-        {unwatchedMovies.map((movie, index) => (
+        {unwatchedMovies.map((movie) => (
           <div key={movie.title} className="movie-card">
             <h3>{movie.title}</h3>
             <div>Rating: {movie.vote_average}</div>
             <div>{movie.overview}</div>
-            <button onClick={() => toggleWatched(index)}>
+            <button onClick={() => toggleWatched(movies.indexOf(movie))}>
               Mark Watched
             </button>
           </div>
