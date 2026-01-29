@@ -1,0 +1,36 @@
+p {
+    color: white;
+
+}
+h3 {
+    color: white;
+}
+h2 {
+    color: white;
+}
+#form {
+    text-align: center;
+}
+li {
+    text-align: center;
+    
+}
+ol {
+    text-align: center;
+    color: white;
+
+}
+
+#reviewStage {
+    background-color: #214358;
+    border: .3em;
+    padding: 1em;
+    border-radius: 1.5em;
+    border-style: solid;
+    top: 10em;
+    height: fit-content;
+    text-align: center;
+}
+#numberInput {
+    height: 20px
+}
