@@ -1,6 +1,6 @@
 import { useState } from "react";
 import movieData from "../../../../testMovieData.json";
-import "./searchBar.css";
+import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
 import type { JSX } from "react";
 import type { Watchlist } from "../../../assets/types/watchlistType";
