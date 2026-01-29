@@ -1,13 +1,26 @@
 nav {
   display: flex;
   justify-content: space-around;
-  padding-bottom: 5%;
+  padding-bottom: 2%;
 }
 
-nav span {
-  margin: 2em;
+.page-links {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
 }
 
-nav a {
-  color: #9CA6B8;
+a {
+  color: white;
+  font-family: "Title-Text";
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 0.5em;
+  background-color: #214358;
+}
+
+a:hover {
+  transition: 0.5s;
+  color: white;
+  background-color: black;
 }

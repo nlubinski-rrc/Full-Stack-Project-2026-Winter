@@ -1,4 +1,4 @@
-import "./movieCard.css";
+import "./movieCard.css"
 
 function MovieCard({ movie }: { movie: String[] }) {
     return (

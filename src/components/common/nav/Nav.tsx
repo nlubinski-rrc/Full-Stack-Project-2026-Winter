@@ -1,22 +1,11 @@
 import "./Nav.css";
+import { NavLink } from "react-router";
 
 function Nav() {
     return(<nav>
         <div className="page-links">
-            <span>
-                <a href="#">Home</a>
-            </span>
-            <span>
-                <a href="#">Top Movies</a>
-            </span>
-            <span>
-                <a href="#">My List</a>
-            </span>
-        </div>
-        <div className="user-management-links">
-            <span>
-                <a href="#">Log In</a>
-            </span>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/my-watchlist">My Watchlist</NavLink>
         </div>
     </nav>);
 }
