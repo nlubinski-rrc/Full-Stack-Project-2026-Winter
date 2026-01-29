@@ -1,7 +1,6 @@
-export type watchlist = {
+export type Watchlist = {
     watchlistItems: {
-        movieId: number,
-        movieTitle: string
-    },
-}[]
-
+        movieId: number;
+        movieTitle: string;
+    }[];
+};
