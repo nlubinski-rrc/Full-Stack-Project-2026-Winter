@@ -1,6 +1,6 @@
 import './App.css';
 import Footer from './components/common/footer/footer.tsx';
-import Nav from './components/common/nav/Nav';
+import Nav from './components/common/nav/Nav.tsx';
 import MovieGrid from './components/common/movie-grid/movieGrid.tsx';
 
 import LeftSideBar from './components/common/Left-Side-Bar/leftSIdeBar.tsx';
