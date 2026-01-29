@@ -44,7 +44,9 @@ export function CreateReview() {
             </button>
             <div id="reviewStage">
                 <h2>Recent reviews:</h2>
-                <input id="numberInput" type="number" value={deleteText} onChange={handleChangeDeleteText} placeholder="Select which review to delete"/>
+                <form action="submit">
+                    <input id="numberInput" type="number" value={deleteText} onChange={handleChangeDeleteText} placeholder="Select which review to delete"/>
+                </form>
                 <button onClick={() => removeReview(Number(deleteText) - 1)}>
                     Remove Review
                 </button>
