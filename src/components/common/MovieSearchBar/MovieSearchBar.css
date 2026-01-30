@@ -1,0 +1,44 @@
+#input-fields input {
+    padding: 0.5em;
+    font-size: 16px;
+    margin-bottom: 2em;
+    width: 26em;
+    font-family: "Regular-Text";
+}
+
+form p {
+    font-family: "Title-Text";
+    font-size: 20px;
+    margin: 0 0 0.5em 0;
+    width: 25%;
+}
+
+#search-results {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding-top: 1em;
+    gap: 1em;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+}
+
+#search-results p {
+    font-family: "Title-Text";
+    font-size: 20px;
+}
+
+.add-to-watchlist-button {
+    margin-top: 1%;
+    border-radius: 5px;
+    font-family: "Regular-Text";
+    background-color: #214358;
+    color: white;
+    border: 2px, solid black;
+}
+
+#results {
+    border: 3px solid white;
+    border-radius: 10px;
+}

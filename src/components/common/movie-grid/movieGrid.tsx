@@ -1,25 +1,13 @@
 import "./movieGrid.css";
-import movieData from "../../../../testMovieData.json"
+import movieData from "../../../../testMovieData.json";
+import MovieCard from "../movieCard/movieCard";
 
 function MovieGrid() {
-
     const movieListItems = movieData["results"].map((movie) => {
-        return (
-            <div className="movieCard">
-                <h3 className="cardTitle">
-                    {movie.title}
-                </h3>
-                <div>Rating: {movie.vote_average}</div>
-                <div>{movie.overview}</div>
-            </div>
-        );
+        return <MovieCard key={movie.id} movie={[movie.title, movie.vote_average.toString(), movie.overview]} />;
     });
 
-    return (
-        <div id="movieGrid">
-            {movieListItems}
-        </div>
-    );
+    return <div id="movieGrid">{movieListItems}</div>;
 }
 
 export default MovieGrid;
