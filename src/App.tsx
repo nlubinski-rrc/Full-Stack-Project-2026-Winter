@@ -27,7 +27,6 @@ function App() {
         <MovieGrid />
         <TopReviewersSideBar />
       </section>
-      <FavoriteActorsPage />
       <Footer />
       </>
         }/>
@@ -38,6 +37,12 @@ function App() {
         <WatchlistPage watchlist={userWatchlist} setWatchlist={setWatchlist}/>
         </>
       }
+      />
+      <Route 
+        path="/favorite-actors"
+        element={
+          <FavoriteActorsPage />
+        }
       />
     
     </Routes>
