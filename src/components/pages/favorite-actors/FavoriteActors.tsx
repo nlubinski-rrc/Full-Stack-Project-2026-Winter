@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Actor } from "../../../types/actor";
 import ActorListDisplay from "../../common/actor-list-display/ActorListDisplay.tsx"
+import "./favoriteActors.css"
 
 const actorData: Actor[] = [
     {
@@ -34,12 +35,20 @@ function FavoriteActorsPage() {
     const [actors, updateActors] = useState<Actor[]>(actorData);
 
     return(
-    <>
+    <div id="fav-actors-container">
+        <section>
         <ActorListDisplay
-            actors={actors}
+            actors={actors.filter(a => !a.isFavorite)}
             updateActors={updateActors} 
         />
-    </>
+        </section>
+        <section>
+        <ActorListDisplay 
+            actors={actors.filter(a => a.isFavorite)}
+            updateActors={updateActors}
+            />
+        </section>
+    </div>
     );
 }
 
