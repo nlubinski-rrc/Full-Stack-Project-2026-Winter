@@ -12,9 +12,10 @@ function ActorCard(
     }
 ) {
     return (
-        <div className="actor-card">
+        <div className={`${actor.isFavorite ? "is-favorite" : ""} + actor-card`}>
             <h3>{actor.name}</h3>
-            <button onClick={onSaveClick} className={actor.isFavorite ? "is-favorite" : ""}>
+            <button onClick={onSaveClick}>
+                {actor.isFavorite ? "Unlike" : "Like"}
             </button>
         </div>
     );
