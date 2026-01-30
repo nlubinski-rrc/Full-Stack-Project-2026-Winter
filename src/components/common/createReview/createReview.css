@@ -56,3 +56,6 @@ button:hover {
     color: #214358;
     background-color: white;
 }
+label {
+    color: white
+}

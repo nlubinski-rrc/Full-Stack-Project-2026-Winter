@@ -26,8 +26,8 @@ export function CreateReview() {
         setReviews( prevItems => { 
             Number(index)
             if (index <= -1 || index >= prevItems.length) {
-            setError("Review you're trying to delete doesn't exist");
-            return prevItems; // IMPORTANT
+                setError("Review you're trying to delete doesn't exist");
+                return prevItems;
             }
             const newItems = [...prevItems];
             newItems.splice(index, 1);
@@ -45,6 +45,7 @@ export function CreateReview() {
             <div id="reviewStage">
                 <h2>Recent reviews:</h2>
                 <form action="submit">
+                    <label>Review to delete:</label>
                     <input id="numberInput" type="number" value={deleteText} onChange={handleChangeDeleteText} placeholder="Select which review to delete"/>
                 </form>
                 <button onClick={() => removeReview(Number(deleteText) - 1)}>
