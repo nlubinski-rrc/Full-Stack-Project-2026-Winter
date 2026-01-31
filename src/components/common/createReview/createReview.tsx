@@ -1,11 +1,18 @@
 import { useState } from "react";
 import "./createReview.css";
-export function CreateReview() {
+import type { Watchlist } from "../../../assets/types/watchlistType";
+import MovieCard from "../../common/movieCard/movieCard";
+import movieData from "../../../../testMovieData.json";
+
+type CreateReviewProps = {
+    watchlist: Watchlist;
+    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
+};
+export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
     const [text, textSave] = useState("");
     const [error, setError] = useState("");
     const [reviews, setReviews] = useState<string[]>([]);
     const [deleteText, setDeleteText] = useState("");
-
     function handleChange(e) {
         textSave(e.target.value)
         if (error) {
@@ -15,10 +22,21 @@ export function CreateReview() {
     function handleChangeDeleteText(e) {
         setDeleteText(e.target.value)
     }
+    const movieIds = watchlist.watchlistItems.map((movie) =>movie.movieId);
+    const movieList = movieData["results"].map((movie) => {
+                if (movieIds.includes(movie.id)) {
+                    return (
+                        <MovieCard
+                            key={movie.id}
+                            movie={[movie.title, movie.vote_average.toString()]}
+                        />
+                    );
+                }
+            });
     function saveText() {
         if (text.length < 30) {
-        setError("review has to be longer than 30 characters")
-        return
+            setError("review has to be longer than 30 characters")
+            return
         }
         setReviews(prev => [...prev, text]);
     };
@@ -33,13 +51,22 @@ export function CreateReview() {
             newItems.splice(index, 1);
             setError("");
             return newItems;
-            });
+        });
+    }
+    function checkMovieList() {
+        setWatchlist(prev => ({
+            ...prev,
+            watchlistItems: prev.watchlistItems.filter(movie =>
+                !text.includes(movie.movieTitle)
+            )
+        })
+    );
     }
     return(
         <div id="reviewform">
             <h2>leave a review and please be sure to include your movie title</h2>
             <textarea value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>Review message</textarea>
-            <button onClick={saveText}>
+            <button onClick={() => {saveText();checkMovieList();}}>
                 Submit review
             </button>
             <div id="reviewStage">
@@ -57,6 +84,11 @@ export function CreateReview() {
                     ))}
                 </ol>
                 <p>{error}</p>
+            </div>
+            <label>Watchlist:</label>
+            <div>
+            <h3>Movies you can review:</h3>
+            <h3 id="movieList">{movieList}</h3>
             </div>
         </div>
     )

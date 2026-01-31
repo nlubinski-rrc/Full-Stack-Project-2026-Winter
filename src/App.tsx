@@ -3,11 +3,16 @@ import Footer from './components/common/footer/footer.tsx'
 import Nav from './components/common/nav/Nav.tsx';
 import MovieGrid from './components/common/movie-grid/movieGrid.tsx';
 import LeftSideBar from './components/common/Left-Side-Bar/leftSIdeBar.tsx'
-import movies from './components/common/jsonMovies.tsx'
+import movies from './components/common/jsonMovies.ts'
 import TopReviewersSideBar from './components/common/top-reviewers-side-bar/topReviewers.tsx';
 import {Routes, Route} from "react-router-dom"
 import { CreateReview } from './components/common/createReview/createReview.tsx';
+import WatchlistPage from './components/pages/watchlistPage/watchlist.tsx';
+import { useState } from 'react';
+import type { Watchlist } from './assets/types/watchlistType.ts';
+
 function App() {
+  const [userWatchlist, setWatchlist] = useState<Watchlist>({watchlistItems: []})
   return (
     <>
     <Nav></Nav>
@@ -25,14 +30,25 @@ function App() {
       </>
         }/>
       <Route
-      path='//create-reviews'
+      path='/create-reviews'
       element={
         <>
-        <CreateReview/>
+        <CreateReview watchlist={userWatchlist} setWatchlist={setWatchlist}/>
         </>
       }
       />
+      <Route
+      path='/my-watchlist'
+      element={
+        <>
+        <WatchlistPage watchlist={userWatchlist} setWatchlist={setWatchlist}/>
+        </>
+      }
+      />
+    
     </Routes>
+       
+
     </>
   );
 };

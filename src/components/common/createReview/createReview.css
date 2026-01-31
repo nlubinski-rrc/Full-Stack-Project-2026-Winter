@@ -49,7 +49,7 @@ input {
 button {
     border: .3em;
     border-radius: 1.5em;
-    background-color: #214358;
+    background-color: #1c5e86;
     color: white;
 }
 button:hover {
@@ -58,4 +58,11 @@ button:hover {
 }
 label {
     color: white
+}
+
+#movieList {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    height: 40%;
 }
