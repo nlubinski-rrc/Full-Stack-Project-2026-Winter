@@ -1,6 +1,6 @@
 import "./movieCard.css"
 
-function MovieCard({ movie }: { movie: String[] }) {
+function MovieCard({ movie }: { movie: string[] }) {
     return (
         <div className="movieCard">
             <h3 className="cardTitle">{movie[0]}</h3>

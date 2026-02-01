@@ -1,0 +1,23 @@
+#fav-actors-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#watchListContainer {
+    border-radius: 1.5em;
+    border-style: solid;
+    border-color: #9CA6B8;
+    background-color: #214358;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+li {
+    color: white;
+    background-color: #151B25;
+    padding: 0.5rem;
+}
+
+h3 {
+    color: white;
+}

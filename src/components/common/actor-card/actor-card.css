@@ -1,0 +1,12 @@
+
+.actor-card {
+    border: 0.5rem;
+    border-style: solid;
+    border-color: #9CA6B8;
+    background-color: #214358;
+    padding: 1rem;
+}
+
+.is-favorite {
+    border-color: yellow;
+}
