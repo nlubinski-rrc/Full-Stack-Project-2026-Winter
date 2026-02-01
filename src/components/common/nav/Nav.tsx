@@ -7,6 +7,7 @@ function Nav() {
             <NavLink to="/my-watchlist"> My Watchlist </NavLink>
             <NavLink to='/create-reviews'> Create Reviews </NavLink>
             <NavLink to="/favorite-actors">Favorite Actors</NavLink>
+            <NavLink to="/watched-movies">Watched Movies</NavLink>
         </div>
     </nav>);
 }

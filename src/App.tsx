@@ -1,3 +1,4 @@
+export default App;
 import "./App.css";
 import Footer from "./components/common/footer/footer.tsx";
 import Nav from "./components/common/nav/Nav.tsx";
@@ -61,6 +62,7 @@ function App() {
                         />
                     }
                 />
+                <Route path="/watched-movies" element={<WatchedMovies />} />
             </Routes>
         </>
     );

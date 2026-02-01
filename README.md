@@ -2,6 +2,7 @@
 - Dylan K
 - Nolan L
 - Nick M
+- Bhavdeep B
 
 ## Overall idea
 We want to create a movie review system similar to IMDB / Rotten tomatos / Good reads / letterboxd
