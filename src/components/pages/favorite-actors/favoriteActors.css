@@ -6,15 +6,15 @@
 #watchListContainer {
     border-radius: 1.5em;
     border-style: solid;
-    border-color: #9CA6B8;
+    border-color: #9ca6b8;
     background-color: #214358;
     padding: 1rem;
     margin-top: 1rem;
 }
 
-li {
+#watchListItem {
     color: white;
-    background-color: #151B25;
+    background-color: #151b25;
     padding: 0.5rem;
 }
 
