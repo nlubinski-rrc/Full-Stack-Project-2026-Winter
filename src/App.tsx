@@ -8,12 +8,15 @@ import movies from './components/common/jsonMovies.ts'
 import TopReviewersSideBar from './components/common/top-reviewers-side-bar/topReviewers.tsx';
 import WatchlistPage from './components/pages/watchlistPage/watchlist.tsx';
 import FavoriteActorsPage from './components/pages/favorite-actors/FavoriteActors.tsx';
+import { actorData } from './components/pages/favorite-actors/actorData.ts';
 import {Routes, Route} from "react-router-dom"
 import { useState } from 'react';
 import type { Watchlist } from './assets/types/watchlistType.ts';
+import type { Actor } from './types/actor.ts';
 
 function App() {
   const [userWatchlist, setWatchlist] = useState<Watchlist>({watchlistItems: []})
+  const [actors, updateActors] = useState<Actor[]>(actorData);
   return (
     <>
     <Nav></Nav>
@@ -41,7 +44,7 @@ function App() {
       <Route 
         path="/favorite-actors"
         element={
-          <FavoriteActorsPage />
+          <FavoriteActorsPage actors={actors} updateActors={updateActors}/>
         }
       />
     
