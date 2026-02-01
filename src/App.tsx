@@ -44,7 +44,12 @@ function App() {
       <Route 
         path="/favorite-actors"
         element={
-          <FavoriteActorsPage actors={actors} updateActors={updateActors}/>
+          <FavoriteActorsPage 
+            actors={actors}
+            updateActors={updateActors}
+            userWatchlist={userWatchlist}
+            setWatchlist={setWatchlist}
+            />
         }
       />
     

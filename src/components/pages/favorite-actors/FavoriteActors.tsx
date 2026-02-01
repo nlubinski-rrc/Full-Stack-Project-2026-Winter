@@ -1,16 +1,30 @@
 import type { Actor } from "../../../types/actor";
+import type { Watchlist } from "../../../assets/types/watchlistType.ts";
 import ActorListDisplay from "../../common/actor-list-display/ActorListDisplay.tsx"
 import "./favoriteActors.css"
+import type { JSX } from "react";
 
 function FavoriteActorsPage(
     {
         actors,
-        updateActors
+        updateActors,
+        userWatchlist,
+        //setWatchlist
     }:
     {
         actors: Actor[],
-        updateActors: React.Dispatch<React.SetStateAction<Actor[]>>
+        updateActors: React.Dispatch<React.SetStateAction<Actor[]>>,
+        userWatchlist: Watchlist,
+        setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>
     }) {
+
+    const watchListItems: JSX.Element[] = userWatchlist.watchlistItems.map((movie) => {
+        return (
+            <ul>
+                <li>{movie.movieTitle}</li>
+            </ul>
+        );
+    });
 
     return(
     <div id="fav-actors-container">
@@ -25,6 +39,10 @@ function FavoriteActorsPage(
             actors={actors.filter(a => a.isFavorite)}
             updateActors={updateActors}
             />
+        </section>
+        <section>
+            <h3>Your Watchlist</h3>
+            {watchListItems}
         </section>
     </div>
     );
