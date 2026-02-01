@@ -9,7 +9,7 @@ function FavoriteActorsPage(
         actors,
         updateActors,
         userWatchlist,
-        //setWatchlist
+        setWatchlist
     }:
     {
         actors: Actor[],
@@ -20,9 +20,15 @@ function FavoriteActorsPage(
 
     const watchListItems: JSX.Element[] = userWatchlist.watchlistItems.map((movie) => {
         return (
-            <ul>
-                <li>{movie.movieTitle}</li>
-            </ul>
+            <li>
+                {movie.movieTitle}
+                <button onClick={() => {
+                    const newList = userWatchlist.watchlistItems.filter(filteredMovie => filteredMovie.movieId != movie.movieId);
+                    setWatchlist({
+                        watchlistItems: newList
+                    });
+                }}>Remove</button>  
+            </li>
         );
     });
 
