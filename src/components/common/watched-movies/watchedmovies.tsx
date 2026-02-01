@@ -1,5 +1,5 @@
 import "./watchedmovies.css";
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface Movie {
   title: string;
@@ -52,7 +52,7 @@ function WatchedMovies() {
         className="search-input"
         placeholder="Search movies (e.g. Inception)..."
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}  // Real-time update!
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
       />
 
       <h2>Watched Movies ({watchedMovies.length})</h2>
