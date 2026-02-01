@@ -20,7 +20,7 @@ function FavoriteActorsPage(
 
     const watchListItems: JSX.Element[] = userWatchlist.watchlistItems.map((movie) => {
         return (
-            <li>
+            <li key={movie.movieId}>
                 {movie.movieTitle}
                 <button onClick={() => {
                     const newList = userWatchlist.watchlistItems.filter(filteredMovie => filteredMovie.movieId != movie.movieId);
@@ -46,9 +46,9 @@ function FavoriteActorsPage(
             updateActors={updateActors}
             />
         </section>
-        <section>
+        <section id="watchListContainer">
             <h3>Your Watchlist</h3>
-            {watchListItems}
+            <ul>{watchListItems}</ul>
         </section>
     </div>
     );
