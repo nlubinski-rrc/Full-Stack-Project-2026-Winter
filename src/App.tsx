@@ -31,17 +31,9 @@ function App() {
         <Route path="/my-watchlist" element={
           <WatchlistPage watchlist={userWatchlist} setWatchlist={setWatchlist} />
         } />
-        <Route path="/watched-movies" element={  // ← CRITICAL ROUTE
-          <>
-            <section id="main-section">
-              <LeftSideBar movies={movies} />
-              <WatchedMovies />
-              <TopReviewersSideBar />
-            </section>
-            <Footer />
-          </>
-        } />
+        <Route path="/watched-movies" element={<WatchedMovies />} />
       </Routes>
+      <Footer />
     </>
   );
 }
