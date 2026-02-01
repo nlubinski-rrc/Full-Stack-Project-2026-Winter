@@ -1,4 +1,3 @@
-export default App;
 import "./App.css";
 import Footer from "./components/common/footer/footer.tsx";
 import Nav from "./components/common/nav/Nav.tsx";
@@ -8,6 +7,7 @@ import movies from "./components/common/jsonMovies.ts";
 import TopReviewersSideBar from "./components/common/top-reviewers-side-bar/topReviewers.tsx";
 import WatchlistPage from "./components/pages/watchlistPage/watchlist.tsx";
 import FavoriteActorsPage from "./components/pages/favorite-actors/FavoriteActors.tsx";
+import WatchedMovies from "./components/common/watched-movies/watchedmovies.tsx";
 import { actorData } from "./components/pages/favorite-actors/actorData.ts";
 import { Routes, Route } from "react-router-dom";
 import { CreateReview } from "./components/common/createReview/createReview.tsx";
