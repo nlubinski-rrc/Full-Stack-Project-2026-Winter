@@ -1,0 +1,31 @@
+.movie-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.movie-card {
+  background-color: #214358;
+  padding: 1rem;
+  color: white;
+  border-radius: 12px;
+}
+
+.movie-card.watched {
+  background-color: #4CAF50;
+}
+
+button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background: #ff5252;
+}
