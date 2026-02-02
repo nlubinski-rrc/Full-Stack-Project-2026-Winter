@@ -13,14 +13,15 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
     const [error, setError] = useState("");
     const [reviews, setReviews] = useState<string[]>([]);
     const [deleteText, setDeleteText] = useState("");
-    function handleChange(e) {
-        textSave(e.target.value)
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        textSave(e.target.value);
         if (error) {
-            setError("")
+            setError("");
         }
     }
-    function handleChangeDeleteText(e) {
-        setDeleteText(e.target.value)
+
+    function handleChangeDeleteText(e: React.ChangeEvent<HTMLInputElement>) {
+        setDeleteText(e.target.value);
     }
     const movieIds = watchlist.watchlistItems.map((movie) =>movie.movieId);
     const movieList = movieData["results"].map((movie) => {
@@ -71,7 +72,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             </button>
             <div id="reviewStage">
                 <h2>Recent reviews:</h2>
-                <form action="submit">
+                <form action="submit" name="CreateReviewForm">
                     <label>Review to delete:</label>
                     <input id="numberInput" type="number" value={deleteText} onChange={handleChangeDeleteText} placeholder="Select which review to delete"/>
                 </form>
@@ -85,7 +86,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 </ol>
                 <p>{error}</p>
             </div>
-            <label>Watchlist:</label>
+            <h2>Watchlist:</h2>
             <div>
             <h3>Movies you can review:</h3>
             <h3 id="movieList">{movieList}</h3>

@@ -10,7 +10,6 @@ import FavoriteActorsPage from './components/pages/favorite-actors/FavoriteActor
 import { actorData } from './components/pages/favorite-actors/actorData.ts';
 import {Routes, Route} from "react-router-dom"
 import { CreateReview } from './components/common/createReview/createReview.tsx';
-import WatchlistPage from './components/pages/watchlistPage/watchlist.tsx';
 import { useState } from 'react';
 import type { Watchlist } from './assets/types/watchlistType.ts';
 import type { Actor } from './types/actor.ts';
