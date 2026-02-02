@@ -65,15 +65,15 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
     }
     return(
         <div id="reviewform">
-            <h2>leave a review and please be sure to include your movie title</h2>
-            <textarea value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>Review message</textarea>
+            <label htmlFor="createTheReview">Leave a review and please be sure to include your movie title</label>
+            <textarea id="createTheReview" value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>Review message</textarea>
             <button onClick={() => {saveText();checkMovieList();}}>
                 Submit review
             </button>
             <div id="reviewStage">
                 <h2>Recent reviews:</h2>
                 <form action="submit" name="CreateReviewForm">
-                    <label>Review to delete:</label>
+                    <label htmlFor="numberInput">Review to delete:</label>
                     <input id="numberInput" type="number" value={deleteText} onChange={handleChangeDeleteText} placeholder="Select which review to delete"/>
                 </form>
                 <button onClick={() => removeReview(Number(deleteText) - 1)}>
