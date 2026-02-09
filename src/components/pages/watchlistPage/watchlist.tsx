@@ -1,7 +1,7 @@
 import "./watchlist.css";
 import MovieCard from "../../common/movieCard/movieCard";
 import movieData from "../../../../testMovieData.json";
-import type { Watchlist } from "../../../assets/types/watchlistType";
+import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 
 type watchListProps = {

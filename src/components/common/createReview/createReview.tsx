@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./createReview.css";
-import type { Watchlist } from "../../../assets/types/watchlistType";
+import type { Watchlist } from "../../../types/watchlistType";
 import MovieCard from "../../common/movieCard/movieCard";
 import movieData from "../../../../testMovieData.json";
 
