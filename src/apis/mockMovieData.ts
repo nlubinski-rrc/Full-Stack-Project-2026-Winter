@@ -1,6 +1,6 @@
-import type { movie } from "../types/movie";
+import type { Movie } from "../types/movie";
 
-const movies: movie[] = [
+export const movies: Movie[] = [
     {
       Id: 640146,
       title: "Ant-Man and the Wasp: Quantumania",

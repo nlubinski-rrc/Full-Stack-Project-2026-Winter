@@ -1,4 +1,4 @@
-export interface movie {
+export interface Movie {
     Id: number;
     title: string;
     overview: string;
