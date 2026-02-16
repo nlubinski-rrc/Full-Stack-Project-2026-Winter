@@ -1,6 +1,6 @@
 import "./watchlist.css";
 import MovieCard from "../../common/movieCard/movieCard";
-import movieData from "../../../../testMovieData.json";
+import { useMovies } from "../../../hooks/movieHook";
 import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 
@@ -10,7 +10,9 @@ type watchListProps = {
 };
 
 function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
+    const { movies } = useMovies([])
     let movieListItems;
+    
 
     if (watchlist.watchlistItems.length === 0) {
         movieListItems = <p>No movies in watchlist</p>;
@@ -21,12 +23,12 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     if (movieIds.length === 0) {
         movieListItems = <p>No movies in watchlist</p>;
     } else {
-        movieListItems = movieData["results"].map((movie) => {
-            if (movieIds.includes(movie.id)) {
+        movieListItems = movies.map((movie) => {
+            if (movieIds.includes(movie.Id)) {
                 return (
                     <MovieCard
-                        key={movie.id}
-                        movie={[movie.title, movie.vote_average.toString(), movie.overview]}
+                        key={movie.Id}
+                        movie={[movie.title, movie.averageRating.toString(), movie.overview]}
                     />
                 );
             }
