@@ -28,3 +28,12 @@ p {
     display: flex;
     align-items: flex-start;
 }
+
+@media (max-width: 1920px) {
+    .no-movies-text {
+        width: 97%;
+    }
+    #movies {
+        width: 45%;
+    }
+}
