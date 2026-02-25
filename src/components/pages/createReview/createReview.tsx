@@ -61,8 +61,8 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
     return(
         <div id="reviewform">
             <div id="createReviewStage">
-                <label>Select a movie:</label>
-                <select value={selectedMovieId} onChange={e => setSelectedMovieId(e.target.value)}>
+                <label htmlFor="DropDownForMovies" >Select a movie:</label>
+                <select id="DropDownForMovies" value={selectedMovieId} onChange={e => setSelectedMovieId(e.target.value)}>
                     <option value="SelectedMovie">-- Select a movie --</option>
                     {availableMovies.map(movie => (
                         <option key={movie.title} value={movie.title}>
@@ -70,8 +70,8 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                         </option>
                     ))}
                 </select>
-                <label>Select review out of ten:</label>
-                <select value={Number(reviewOutOfTen)} onChange={e => setReviewOutOfTen(Number(e.target.value))}>
+                <label htmlFor="DropDownRatingOfTen">Select review out of ten:</label>
+                <select id="DropDownRatingOfTen" value={Number(reviewOutOfTen)} onChange={e => setReviewOutOfTen(Number(e.target.value))}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
