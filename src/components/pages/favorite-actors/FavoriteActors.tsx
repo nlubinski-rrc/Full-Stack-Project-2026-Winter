@@ -53,11 +53,7 @@ function FavoriteActorsPage({
             <section>
                 <ActorListDisplay
                     actors={actors.filter((a) => a.isFavorite)}
-                    onSaveClick={
-                        async (id: number) => {
-                            await toggleFavouriteActor(id);
-                        }
-                    }
+                    onSaveClick={toggleFavouriteActor}
                     // updateActors={updateActors}
                 />
             </section>
