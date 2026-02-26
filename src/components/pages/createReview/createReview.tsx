@@ -41,6 +41,10 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             setError("review has to be longer than 30 characters")
             return
         }
+        if (!selectedMovieId) {
+            setError("Please select a movie.");
+            return;
+        }
         const newReview: reviewType = {
             Id: crypto.randomUUID(),
             movieName: selectedMovieId,
@@ -56,6 +60,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 !selectedMovieId.includes(movie.movieTitle)
             )
         })
+        
     );
     }
     return(
@@ -63,7 +68,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             <div id="createReviewStage">
                 <label htmlFor="DropDownForMovies" >Select a movie:</label>
                 <select id="DropDownForMovies" value={selectedMovieId} onChange={e => setSelectedMovieId(e.target.value)}>
-                    <option value="SelectedMovie">-- Select a movie --</option>
+                    <option value="SelectedMovie">Select a movie</option>
                     {availableMovies.map(movie => (
                         <option key={movie.title} value={movie.title}>
                             {movie.title}
@@ -84,7 +89,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                     <option value="10">10</option>
                 </select>
                 <label htmlFor="createTheReview">Leave a review here:</label>
-                <textarea id="createTheReview" value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>Review message</textarea>
+                <textarea id="createTheReview" value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>--Review message--</textarea>
                 <button onClick={() => {saveText();checkMovieList();}}>
                     Submit review
                 </button>
