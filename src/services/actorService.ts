@@ -1,12 +1,12 @@
 import * as ActorRepo from "../apis/actorRepo";
 import type { Actor } from "../types/actor";
 
-export function fetchActors() {
+export async function fetchActors() {
     const actors = ActorRepo.fetchActors();
     return actors;
 }
 
-export function toggleFavouriteActor(actorId: number) {
+export async function toggleFavouriteActor(actorId: number) {
     const actor: Actor = ActorRepo.getActorById(actorId);
 
     if (actor.isFavorite) {
