@@ -11,7 +11,7 @@ import WatchedMovies from "./components/common/watched-movies/watchedmovies.tsx"
 import { Routes, Route } from "react-router-dom";
 import { CreateReview } from "./components/common/createReview/createReview.tsx";
 import { useState } from "react";
-import type { Watchlist } from "./assets/types/watchlistType.ts";
+import type { Watchlist } from "./types/watchlistType.ts";
 
 function App() {
     const [userWatchlist, setWatchlist] = useState<Watchlist>({ watchlistItems: [] });

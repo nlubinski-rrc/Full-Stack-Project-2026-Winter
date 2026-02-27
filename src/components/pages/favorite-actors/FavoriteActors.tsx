@@ -1,4 +1,4 @@
-import type { Watchlist } from "../../../assets/types/watchlistType.ts";
+import type { Watchlist } from "../../../types/watchlistType.ts";
 import ActorListDisplay from "../../common/actor-list-display/ActorListDisplay.tsx";
 import "./favoriteActors.css";
 import type { JSX } from "react";
