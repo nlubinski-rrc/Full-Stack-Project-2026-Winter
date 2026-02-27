@@ -10,19 +10,6 @@ export function useActors(
     const [error, setError] = useState<string | null>();
     const [refreshKey, setRefreshKey] = useState<number>(0);
 
-    // async function fetchActors() {
-    //     try {
-    //         let result = await ActorService.fetchActors();
-
-    //         if (filterFn) {
-    //             result = result.filter(filterFn);
-    //         }
-    //         updateActors([...result]);
-    //     } catch (errorObject) {
-    //         setError(`${errorObject}`);
-    //     }
-    // }
-
     async function toggleFavouriteActor(actorId: number) {
         try {
             await ActorService.toggleFavouriteActor(actorId);

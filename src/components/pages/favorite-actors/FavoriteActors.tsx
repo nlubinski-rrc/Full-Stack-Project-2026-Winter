@@ -1,4 +1,3 @@
-// import type { Actor } from "../../../types/actor";
 import type { Watchlist } from "../../../assets/types/watchlistType.ts";
 import ActorListDisplay from "../../common/actor-list-display/ActorListDisplay.tsx";
 import "./favoriteActors.css";
@@ -6,13 +5,9 @@ import type { JSX } from "react";
 import { useActors } from "../../../hooks/useActors.ts";
 
 function FavoriteActorsPage({
-    // actors,
-    // updateActors,
     userWatchlist,
     setWatchlist,
 }: {
-    // actors: Actor[];
-    // updateActors: React.Dispatch<React.SetStateAction<Actor[]>>;
     userWatchlist: Watchlist;
     setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
 }) {
@@ -47,14 +42,12 @@ function FavoriteActorsPage({
                 <ActorListDisplay
                     actors={actors.filter((a) => !a.isFavorite)}
                     onSaveClick={toggleFavouriteActor}
-                    // updateActors={updateActors}
                 />
             </section>
             <section>
                 <ActorListDisplay
                     actors={actors.filter((a) => a.isFavorite)}
                     onSaveClick={toggleFavouriteActor}
-                    // updateActors={updateActors}
                 />
             </section>
             <section id="watchListContainer">
