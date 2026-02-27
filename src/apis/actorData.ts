@@ -25,5 +25,30 @@
         id: 5,
         name: "Robin Wright",
         isFavorite: false
+    },
+    {
+        id: 6,
+        name: "Chris Pratt",
+        isFavorite: false
+    },
+    {
+        id: 7,
+        name: "Charlie Day",
+        isFavorite: false
+    },
+    {
+        id: 8,
+        name: "Jack Black",
+        isFavorite: false
+    },
+    {
+        id: 9,
+        name: "Seth Rogen",
+        isFavorite: false
+    },
+    {
+        id: 10,
+        name: "Anya Taylor-Joy",
+        isFavorite: false
     }
 ];
