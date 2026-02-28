@@ -20,11 +20,20 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 86em;
+    width: 85.8em;
     gap: 1em;
 }
 
 #search-and-watchlist {
     display: flex;
     align-items: flex-start;
+}
+
+@media (max-width: 1920px) {
+    .no-movies-text {
+        width: 97%;
+    }
+    #movies {
+        width: 45%;
+    }
 }
