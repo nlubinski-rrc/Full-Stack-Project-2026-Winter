@@ -15,14 +15,18 @@ export function useReviews() {
         reviewService.fetchReviews()
     );
 
-    function addReview(newReview: reviewType) {
-        reviewService.createReviewServices(newReview)
+    async function addReview(newReview: reviewType) {
+        const created = await reviewService.addReview(newReview);
+
+        setReviews(prev => [...prev, created]);
     }
-    function deleteReview(reviewId: string) {
+
+    async function deleteReview(reviewId: string) {
+        await reviewService.deleteReview(reviewId);
+
         setReviews(prev =>
             prev.filter(review => review.Id !== reviewId)
         );
-        reviewService.deleteReviewServices(reviewId)
     }
 
     return { reviewsList, addReview, deleteReview };
