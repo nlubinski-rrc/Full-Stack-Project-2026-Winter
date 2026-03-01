@@ -11,6 +11,13 @@ type watchListProps = {
 
 function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     let movieListItems;
+    function removeFromWatchlist(movieId: number) {
+        const newWatchlistItems = watchlist.watchlistItems.filter((item) => item.movieId !== movieId)
+            setWatchlist({
+                watchlistItems: newWatchlistItems
+    })
+            
+        }
 
     if (watchlist.watchlistItems.length === 0) {
         movieListItems = <p>No movies in watchlist</p>;
@@ -19,15 +26,19 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     const movieIds = watchlist.watchlistItems.map((movie) => movie.movieId);
 
     if (movieIds.length === 0) {
-        movieListItems = <p>No movies in watchlist</p>;
+        movieListItems = <p className="no-movies-text">No movies in watchlist</p>;
     } else {
         movieListItems = movieData["results"].map((movie) => {
             if (movieIds.includes(movie.id)) {
                 return (
-                    <MovieCard
-                        key={movie.id}
-                        movie={[movie.title, movie.vote_average.toString(), movie.overview]}
+                    <div>
+                        <MovieCard
+                        key={movie.Id}
+                        movie={[movie.title, movie.averageRating.toString(), movie.overview]}
                     />
+                    <button type="button" onClick={() => removeFromWatchlist(movie.Id)}>Remove</button>
+                    </div>
+
                 );
             }
         });
