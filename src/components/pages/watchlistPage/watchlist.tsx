@@ -1,6 +1,6 @@
 import "./watchlist.css";
 import MovieCard from "../../common/movieCard/movieCard";
-import { useMovies } from "../../../hooks/movieHook";
+import movieData from "../../../../testMovieData.json";
 import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 
@@ -10,9 +10,7 @@ type watchListProps = {
 };
 
 function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
-    const { movies } = useMovies([])
     let movieListItems;
-
     function removeFromWatchlist(movieId: number) {
         const newWatchlistItems = watchlist.watchlistItems.filter((item) => item.movieId !== movieId)
             setWatchlist({
@@ -20,8 +18,6 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     })
             
         }
-
-    
 
     if (watchlist.watchlistItems.length === 0) {
         movieListItems = <p>No movies in watchlist</p>;
@@ -32,8 +28,8 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     if (movieIds.length === 0) {
         movieListItems = <p className="no-movies-text">No movies in watchlist</p>;
     } else {
-        movieListItems = movies.map((movie) => {
-            if (movieIds.includes(movie.Id)) {
+        movieListItems = movieData["results"].map((movie) => {
+            if (movieIds.includes(movie.id)) {
                 return (
                     <div>
                         <MovieCard
