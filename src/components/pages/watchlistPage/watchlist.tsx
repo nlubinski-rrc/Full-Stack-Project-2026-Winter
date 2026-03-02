@@ -52,8 +52,7 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
       </div>
 
       {/* NEW WATCHLIST SEARCH FEATURE */}
-      <div style={{ marginTop: "2rem", padding: "1rem", border: "1px solid #ccc", borderRadius: "8px" }}>
-        <h3>🔍 Search Watchlist</h3>
+        <h3>Search Watchlist</h3>
         <input
           value={searchTerm}
           onChange={(e) => {
