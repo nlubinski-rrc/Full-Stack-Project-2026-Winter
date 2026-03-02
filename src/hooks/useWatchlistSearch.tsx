@@ -1,0 +1,24 @@
+import { useState } from 'react';
+import { WatchlistService } from '../services/WatchlistService';
+
+type WatchlistItem = {
+  movieId: number;
+  movieTitle: string;
+};
+
+export function useWatchlistSearch() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState<WatchlistItem[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const service = new WatchlistService();
+
+  const search = async (query: string) => {
+    setLoading(true);
+    const found = await service.searchWatchlist(query);
+    setResults(found);
+    setLoading(false);
+  };
+
+  return { searchTerm, setSearchTerm, results, search, loading };
+}

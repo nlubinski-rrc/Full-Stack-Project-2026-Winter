@@ -5,8 +5,8 @@ import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 
 type watchListProps = {
-    watchlist: Watchlist;
-    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
+  watchlist: Watchlist;
+  setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
 };
 
 function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
