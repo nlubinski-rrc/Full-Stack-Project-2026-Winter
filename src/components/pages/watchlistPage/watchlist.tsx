@@ -52,6 +52,7 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
       </div>
 
       {/* NEW WATCHLIST SEARCH FEATURE */}
+      <div className="watchlist-search-section">
         <h3>Search Watchlist</h3>
         <input
           value={searchTerm}
