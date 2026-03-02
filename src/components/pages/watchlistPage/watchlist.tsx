@@ -3,12 +3,6 @@ import MovieCard from "../../common/movieCard/movieCard";
 import movieData from "../../../../testMovieData.json";
 import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
-import { useWatchlistSearch } from "../../../hooks/useWatchlistSearch";
-
-type WatchlistItem = {
-  movieId: number;
-  movieTitle: string;
-};
 
 type watchListProps = {
   watchlist: Watchlist;
