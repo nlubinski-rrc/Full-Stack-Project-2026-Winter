@@ -3,7 +3,7 @@ import movieData from "../../../../testMovieData.json";
 import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
 import type { JSX } from "react";
-import type { Watchlist } from "../../../assets/types/watchlistType";
+import type { Watchlist } from "../../../types/watchlistType";
 
 type SearchBarProps = {
     addItemToList: React.Dispatch<React.SetStateAction<Watchlist>>;

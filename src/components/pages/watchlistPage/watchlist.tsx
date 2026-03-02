@@ -1,16 +1,23 @@
 import "./watchlist.css";
 import MovieCard from "../../common/movieCard/movieCard";
 import movieData from "../../../../testMovieData.json";
-import type { Watchlist } from "../../../assets/types/watchlistType";
+import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 
 type watchListProps = {
-    watchlist: Watchlist;
-    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
+  watchlist: Watchlist;
+  setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
 };
 
 function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     let movieListItems;
+    function removeFromWatchlist(movieId: number) {
+        const newWatchlistItems = watchlist.watchlistItems.filter((item) => item.movieId !== movieId)
+            setWatchlist({
+                watchlistItems: newWatchlistItems
+    })
+            
+        }
 
     if (watchlist.watchlistItems.length === 0) {
         movieListItems = <p>No movies in watchlist</p>;
@@ -19,15 +26,19 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
     const movieIds = watchlist.watchlistItems.map((movie) => movie.movieId);
 
     if (movieIds.length === 0) {
-        movieListItems = <p>No movies in watchlist</p>;
+        movieListItems = <p className="no-movies-text">No movies in watchlist</p>;
     } else {
         movieListItems = movieData["results"].map((movie) => {
             if (movieIds.includes(movie.id)) {
                 return (
-                    <MovieCard
+                    <div>
+                        <MovieCard
                         key={movie.id}
                         movie={[movie.title, movie.vote_average.toString(), movie.overview]}
                     />
+                    <button type="button" onClick={() => removeFromWatchlist(movie.id)}>Remove</button>
+                    </div>
+
                 );
             }
         });
