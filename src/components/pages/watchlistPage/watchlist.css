@@ -28,3 +28,28 @@ p {
     display: flex;
     align-items: flex-start;
 }
+
+.watchlist-search-container {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.watchlist-search-input {
+  padding: 0.5rem;
+  width: 300px;
+  margin-right: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.watchlist-search-result {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}

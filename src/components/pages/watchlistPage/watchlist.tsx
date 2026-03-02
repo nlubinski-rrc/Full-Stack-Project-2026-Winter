@@ -61,13 +61,6 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
             search(e.target.value);
           }}
           placeholder="Search watchlist by movie ID or title..."
-          style={{ 
-            padding: "0.5rem", 
-            width: "300px", 
-            marginRight: "1rem",
-            border: "1px solid #ddd",
-            borderRadius: "4px"
-          }}
         />
         
         {loading ? (
@@ -78,13 +71,7 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
             {results.map((item: WatchlistItem) => (
               <div 
                 key={item.movieId} 
-                style={{ 
-                  padding: "0.75rem", 
-                  borderBottom: "1px solid #eee",
-                  backgroundColor: "#f9f9f9",
-                  marginBottom: "0.5rem",
-                  borderRadius: "4px"
-                }}
+                className="watchlist-search-result"
               >
                 <strong>ID:</strong> {item.movieId} | <strong>{item.movieTitle}</strong>
               </div>
