@@ -1,4 +1,4 @@
-import { WatchlistRepository } from '../repositories/WatchlistRepository';
+import { WatchlistRepository } from '../apis/WatchlistRepository';
 
 type WatchlistItem = {
   movieId: number;
