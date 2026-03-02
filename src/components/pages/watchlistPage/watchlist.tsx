@@ -33,10 +33,10 @@ function WatchlistPage({ watchlist, setWatchlist }: watchListProps) {
                 return (
                     <div>
                         <MovieCard
-                        key={movie.Id}
-                        movie={[movie.title, movie.averageRating.toString(), movie.overview]}
+                        key={movie.id}
+                        movie={[movie.title, movie.vote_average.toString(), movie.overview]}
                     />
-                    <button type="button" onClick={() => removeFromWatchlist(movie.Id)}>Remove</button>
+                    <button type="button" onClick={() => removeFromWatchlist(movie.id)}>Remove</button>
                     </div>
 
                 );
