@@ -13,3 +13,10 @@ datasource db {
   provider = "postgresql"
 }
 
+model Review {
+  id String @id @default(uuid())
+  movieName String
+  review String
+  reviewOutOfTen Int
+}
+
