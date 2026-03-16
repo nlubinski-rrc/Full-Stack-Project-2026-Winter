@@ -1,0 +1,7 @@
+node_modules/
+dist/
+capstone-project-bed-firebase-adminsdk-fbsvc-dc482e085d.json
+.env
+logs
+/generated/prisma
+/prisma/migrations

@@ -1,0 +1,906 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "School review API Documentation",
+    "version": "1.0.0",
+    "description": "This is the API documentation for the scholl review application."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Course": {
+        "type": "object",
+        "description": "A course record and its associated restrictions",
+        "required": [
+          "sectionId",
+          "restriction"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the course",
+            "example": "COURSE-101"
+          },
+          "sectionId": {
+            "type": "string",
+            "description": "ID of the section this course belongs to",
+            "example": "SEC-101-A"
+          },
+          "restriction": {
+            "type": "array",
+            "description": "List of restrictions applied to the course",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Prerequisite: MATH-100",
+              "Year 2 or higher"
+            ]
+          }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "description": "A review submitted by a student",
+        "required": [
+          "studentNumber",
+          "reviewOutOfTen"
+        ],
+        "properties": {
+          "reviewId": {
+            "type": "string",
+            "description": "Unique ID of the review",
+            "example": "REV001"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Student's first name",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Student's last name",
+            "example": "Doe"
+          },
+          "studentNumber": {
+            "type": "string",
+            "description": "Student identification number",
+            "example": "A12345678"
+          },
+          "reviewOutOfTen": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Rating between 0 and 10",
+            "example": 8
+          },
+          "comments": {
+            "type": "string",
+            "description": "Optional additional comments",
+            "example": "Great course!"
+          }
+        }
+      },
+      "Section": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "description": "Unique identifier for the section",
+            "example": "SEC-101A"
+          },
+          "location": {
+            "type": "string",
+            "description": "The room or building where the section is held",
+            "example": "Building B - Room 204"
+          },
+          "teacher": {
+            "type": "string",
+            "description": "The instructor teaching this section",
+            "example": "Dr. Smith"
+          },
+          "capacity": {
+            "type": "string",
+            "description": "Maximum number of students allowed in this section",
+            "example": "30"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/courses": {
+      "post": {
+        "summary": "Create a new course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sectionId",
+                  "restriction"
+                ],
+                "properties": {
+                  "courseId": {
+                    "type": "string",
+                    "example": "CPSC101"
+                  },
+                  "sectionId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "restriction": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "CS Majors Only",
+                      "Third Year Only"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Course couldn't be created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all courses",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Course"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Course list wasn't retrieved"
+          }
+        }
+      }
+    },
+    "/courses/{courseId}": {
+      "post": {
+        "summary": "Retrieve a course by its course ID",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the course to retrieve",
+                    "example": "CPSC101"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Course wasn't retrieved"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a course by its course ID",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course to delete",
+            "example": "CPSC101"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "description": "The ID of the deleted course",
+                      "example": "CPSC101"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Course info deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Course couldn't be deleted"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a course's information",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course to update",
+            "example": "CPSC101"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sectionId",
+                  "restriction"
+                ],
+                "properties": {
+                  "sectionId": {
+                    "type": "number",
+                    "description": "The updated section number",
+                    "example": 2
+                  },
+                  "restriction": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Updated course restrictions",
+                    "example": [
+                      "CS",
+                      "ENG"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course info updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Course info couldn't be updated"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "post": {
+        "summary": "Create a new review",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "studentNumber",
+                  "reviewOutOfTen"
+                ],
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "description": "The reviewer's first name",
+                    "example": "John"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "description": "The reviewer's last name",
+                    "example": "Doe"
+                  },
+                  "studentNumber": {
+                    "type": "string",
+                    "description": "The student's unique number",
+                    "example": "A12345678"
+                  },
+                  "reviewId": {
+                    "type": "string",
+                    "description": "Unique identifier for the review",
+                    "example": "REV-2025-01"
+                  },
+                  "reviewOutOfTen": {
+                    "type": "number",
+                    "description": "The score given to the course (0–10)",
+                    "example": 8
+                  },
+                  "comments": {
+                    "type": "string",
+                    "description": "Optional comments about the review",
+                    "example": "Great course, learned a lot!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Review couldn't be created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all reviews",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Review list wasn't retrieved"
+          }
+        }
+      }
+    },
+    "/reviews/{reviewId}": {
+      "post": {
+        "summary": "Retrieve a review by its review ID",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reviewId"
+                ],
+                "properties": {
+                  "reviewId": {
+                    "type": "string",
+                    "description": "The ID of the review to retrieve",
+                    "example": "REV-2025-01"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Review wasn't retrieved"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a review by its reviewID",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reviewId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the review to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Review deleted successfully"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "The ID of the deleted review",
+                      "example": "REV-2025-01"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Review couldn't be deleted"
+          }
+        }
+      }
+    },
+    "/reviews/{reviewid}": {
+      "put": {
+        "summary": "Update an existing review",
+        "tags": [
+          "Reviews"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reviewId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the review to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reviewOutOfTen"
+                ],
+                "properties": {
+                  "reviewOutOfTen": {
+                    "type": "number",
+                    "description": "Updated score for the review (0–10)",
+                    "example": 9
+                  },
+                  "comments": {
+                    "type": "string",
+                    "description": "Optional updated comments",
+                    "example": "The course improved a lot this term."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review info updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Review info couldn't be updated"
+          }
+        }
+      }
+    },
+    "/sections": {
+      "post": {
+        "summary": "Create a new section",
+        "tags": [
+          "Sections"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "location",
+                  "teacher",
+                  "capacity"
+                ],
+                "properties": {
+                  "sectionId": {
+                    "type": "string",
+                    "description": "Unique identifier for the section",
+                    "example": "SEC-101-A"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "The location where this section is held",
+                    "example": "Room 204"
+                  },
+                  "teacher": {
+                    "type": "string",
+                    "description": "Name of the teacher assigned to this section",
+                    "example": "Dr. Smith"
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "description": "Maximum number of students allowed in this section",
+                    "example": 30
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Section created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Section couldn't be created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all sections",
+        "tags": [
+          "Sections"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Section"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Section list wasn't retrieved"
+          }
+        }
+      }
+    },
+    "/sections/{sectionId}": {
+      "get": {
+        "summary": "Get a section by its ID",
+        "tags": [
+          "Sections"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the section",
+            "example": "SEC-101-A"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Section wasn't retrieved"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a section by its ID",
+        "tags": [
+          "Sections"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the section to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Section deleted successfully"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "The ID of the deleted section",
+                      "example": "SEC-101-A"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Section couldn't be deleted"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an existing section",
+        "tags": [
+          "Sections"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the section to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "location": {
+                    "type": "string",
+                    "description": "Updated location for the section",
+                    "example": "Room 205"
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "description": "Updated capacity for the section",
+                    "example": 35
+                  },
+                  "teacher": {
+                    "type": "string",
+                    "description": "Updated teacher for the section",
+                    "example": "Mr. larry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Section info updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Section info couldn't be updated"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
