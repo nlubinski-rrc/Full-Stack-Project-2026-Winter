@@ -1,13 +1,11 @@
-import { Review } from "../../../models/reviewModel";
+import type { reviewType } from "../reviewType";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-import { Request, Response, NextFunction} from "express";
+import { NextFunction, Request, Response} from "express";
 import { successReply, errorReply } from "../../../models/responseModel";
-import * as reviewServices from "../services/reviewServices";
-import { EmailFormat } from "../../../models/nodeMailerModel";
-import sendEmail from "../middleware/nodeMailer";
+import * as reviewServices from "../services/courseServices";
 
 /**
- * Responsible for creating a review
+ * Reponsible for creating a course
  * @param req - The request object.
  * @param res - The response object.
  * @param _next - The express middleware chaining function
@@ -18,14 +16,8 @@ export const createReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const { firstName, lastName, studentNumber, reviewOutOfTen, comments } = req.body;
-        const reviewItem: Review = await reviewServices.createReview({ firstName, lastName, studentNumber, reviewOutOfTen, comments});
-        const email:EmailFormat = {
-            to: process.env.EMAIL_RECIEVER,
-            subject: "Creation of review",
-            text: `A review has been created ${reviewItem.reviewId}`
-        }
-        await sendEmail(email);
+        const {Id, movieName, review, reviewOutOfTen} = req.body;
+        const reviewItem: reviewType = await reviewServices.createReview({ Id, movieName ,review, reviewOutOfTen});
         res.status(HTTP_STATUS.CREATED).json(
             successReply(reviewItem, "Review created successfully")
         );
@@ -39,7 +31,7 @@ export const createReview = async (
 }
 
 /**
- * Responsible for grabbing a review by its review id
+ * Responsible for getting a course by its course id
  * @param req - The request object.
  * @param res - The response object.
  * @param _next - The express middleware chaining function
@@ -50,8 +42,8 @@ export const getReviewByReviewId = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const id:string = req.body.reviewId
-        const reviewData:Review = await reviewServices.getReviewByReviewId(id)
+        const Id:string = req.body.Id
+        const reviewData:reviewType = await reviewServices.getReviewByReviewId(Id)
         res.status(HTTP_STATUS.OK).json(
             successReply(reviewData, "Review retrieved successfully")
         );
@@ -65,7 +57,7 @@ export const getReviewByReviewId = async (
 }
 
 /**
- * Responsible for grabbing all reviews
+ * Responsible for getting all courses
  * @param req - The request object.
  * @param res - The response object.
  * @param _next - The express middleware chaining function
@@ -76,7 +68,7 @@ export const getAllReviews = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const reviewData: Review[] = await reviewServices.getAllReviews();
+        const reviewData: reviewType[] = await reviewServices.getAllReviews();
         res.status(HTTP_STATUS.OK).json(
             successReply(reviewData,"Review list retrieved successfully")
         );
@@ -90,7 +82,7 @@ export const getAllReviews = async (
 }
 
 /**
- * Responsible for updating a review
+ * Responsible for updating a courses info
  * @param req - The request object.
  * @param res - The response object.
  * @param _next - The express middleware chaining function
@@ -101,11 +93,11 @@ export const updateReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const review:string = req.params.reviewId;
-        const { reviewOutOfTen, comments } = req.body;
-        const updatedReview: Review = await reviewServices.updateReview( review, { reviewOutOfTen, comments});
+        const Id:string = req.params.Id;
+        const { movieName, review, reviewOutOfTen } = req.body;
+        const updatedReviewInfo:reviewType = await reviewServices.updateCourse( Id, {movieName, review, reviewOutOfTen});
         res.status(HTTP_STATUS.OK).json(
-            successReply(updatedReview, "Review info updated successfully")
+            successReply(updatedReviewInfo, "Review info updated successfully")
         );
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error);
@@ -117,7 +109,7 @@ export const updateReview = async (
 }
 
 /**
- * Responsible for deleting a review
+ * Responsible for deleting a course
  * @param req - The request object.
  * @param res - The response object.
  * @param _next - The express middleware chaining function
@@ -128,16 +120,10 @@ export const deleteReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const reviewData:string = req.params.reviewId;
-        await reviewServices.deleteReview(reviewData);
-        const email:EmailFormat = {
-            to: process.env.EMAIL_RECIEVER,
-            subject: "Deletion of a review",
-            text: `A review has been deleted with the reviewID:${reviewData}`
-        }
-        await sendEmail(email);
+        const review:string = req.params.Id;
+        await reviewServices.deleteReview(review);
         res.status(HTTP_STATUS.OK).json(
-            successReply(reviewData, "Review deleted successfully")
+            successReply(review, "Review info deleted successfully")
         );
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error);
