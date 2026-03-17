@@ -2,36 +2,36 @@ import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
-import { departments } from "./seedData";
+import {movies, reviews} from "./seedData";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 async function main() {
-    for (const departmentItem of departments) {
-        let employees: { firstName: string; lastName: string }[] = [];
-        for (const employee of departmentItem.employees) {
-            const newEmployee = {
-                firstName: employee.firstName,
-                lastName: employee.lastName,
-            };
-            employees.push(newEmployee);
-        }
-
-        console.log(employees);
-
-        const result = await prisma.department.upsert({
-            where: { departmentId: departmentItem.id },
+    for (const movie of movies) {
+        const result = await prisma.movie.upsert({
+            where: { title: movie.title },
             update: {},
             create: {
-                name: departmentItem.name,
-                employees: {
-                    create: employees,
-                },
+                title: movie.title,
+                overview: movie.overview,
+                averageRating: movie.averageRating,
+                releaseDate: movie.releaseDate
             },
         });
         console.log(result);
+    }
+
+    for (const review of reviews) {
+        const result = await prisma.review.create({
+            data: {
+                movieName: review.movieName,
+                review: review.review,
+                reviewOutOfTen: review.reviewOutOfTen
+            }
+        })
+        console.log(result)
     }
 }
 main()

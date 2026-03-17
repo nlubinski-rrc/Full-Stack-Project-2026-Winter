@@ -18,5 +18,21 @@ model Review {
   movieName String
   review String
   reviewOutOfTen Int
+  movie Movie @relation(fields: [movieName], references: [title])
 }
 
+model Movie {
+  id Int @id @default(autoincrement())
+  title String @unique
+  overview String
+  averageRating Int
+  releaseDate String
+  wishlists Watchlist[]
+  reviews Review[]
+}
+
+model Watchlist {
+  userId Int @id @default(autoincrement())
+  movieId Int
+  movie Movie @relation(fields: [movieId], references: [id])
+}
