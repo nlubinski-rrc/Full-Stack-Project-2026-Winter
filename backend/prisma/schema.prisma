@@ -36,3 +36,9 @@ model Watchlist {
   movieId Int
   movie Movie @relation(fields: [movieId], references: [id])
 }
+
+model Actor {
+  id Int @id @default(autoincrement())
+  name String
+  isFavourite Boolean
+}
