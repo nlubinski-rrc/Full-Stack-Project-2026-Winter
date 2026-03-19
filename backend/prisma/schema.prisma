@@ -20,3 +20,8 @@ model Review {
   reviewOutOfTen Int
 }
 
+model Actor {
+  id Int @id @default(autoincrement())
+  name String
+  isFavourite Boolean
+}
