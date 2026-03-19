@@ -1,14 +1,22 @@
-import { useWatchlistSearch } from "../../../hooks/useWatchlistSearch";
+import { useState } from "react";
 import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
 import type { Watchlist } from "../../../types/watchlistType";
+import movies from "../jsonMovies";
 
 type SearchBarProps = {
     addItemToList: React.Dispatch<React.SetStateAction<Watchlist>>;
 };
 
 function MovieSearchBar({ addItemToList }: SearchBarProps) {
-    const { searchTerm, setSearchTerm, results, search, loading } = useWatchlistSearch();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredMovies =
+        searchTerm.trim() === ""
+            ? []
+            : movies.filter((movie) =>
+                  movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+              );
 
     function addToWatchlist(movieId: number, movieTitle: string) {
         addItemToList((prev) => {
@@ -23,11 +31,6 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
         });
     }
 
-    function handleSearch(value: string) {
-        setSearchTerm(value);
-        search(value);
-    }
-
     return (
         <form>
             <div id="input-fields">
@@ -35,42 +38,37 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
                     type="search"
                     placeholder="Search Movies"
                     value={searchTerm}
-                    onChange={(e) => handleSearch(e.target.value)}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
 
             <p>Results</p>
 
             <div id="search-results">
-                {loading && <p>Loading...</p>}
-
-                {!loading && results.length === 0 && searchTerm !== "" && (
+                {filteredMovies.length === 0 && searchTerm !== "" && (
                     <p>No results found</p>
                 )}
 
-                {!loading &&
-                    results.map((movie) => (
-                        <div key={movie.movieId}>
-                            <div id="results">
-                                <MovieCard
-                                    movie={[
-                                        movie.movieTitle,
-                                        "N/A",
-                                        "No description available",
-                                    ]}
-                                />
-                            </div>
-                            <button
-                                type="button"
-                                className="add-to-watchlist-button"
-                                onClick={() =>
-                                    addToWatchlist(movie.movieId, movie.movieTitle)
-                                }
-                            >
-                                Add to Watchlist
-                            </button>
+                {filteredMovies.map((movie) => (
+                    <div key={movie.id}>
+                        <div id="results">
+                            <MovieCard
+                                movie={[
+                                    movie.title,
+                                    movie.rating.toString(),
+                                    movie.description,
+                                ]}
+                            />
                         </div>
-                    ))}
+                        <button
+                            type="button"
+                            className="add-to-watchlist-button"
+                            onClick={() => addToWatchlist(movie.id, movie.title)}
+                        >
+                            Add to Watchlist
+                        </button>
+                    </div>
+                ))}
             </div>
         </form>
     );
