@@ -29,10 +29,26 @@ model Movie {
   releaseDate String
   wishlists Watchlist[]
   reviews Review[]
+  movieActors ActorMovie[]
 }
 
 model Watchlist {
   userId Int @id @default(autoincrement())
   movieId Int
   movie Movie @relation(fields: [movieId], references: [id])
+}
+
+model Actor {
+  id Int @id @default(autoincrement())
+  name String
+  isFavourite Boolean
+  actorMovies ActorMovie[]
+}
+
+model ActorMovie {
+  actor Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  actorId Int
+  movieId Int
+  @@id([actorId, movieId])
 }
