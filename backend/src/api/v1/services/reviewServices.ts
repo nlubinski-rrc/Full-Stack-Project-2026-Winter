@@ -1,4 +1,3 @@
-const COLLECTION: string = "Courses";
 import { prisma } from "../../../../prisma/client"
 import { reviewType } from "../types/reviewType";
 
@@ -34,7 +33,7 @@ export const getReviewByReviewId = async (Id:string): Promise<reviewType | null>
 
 export const updateReview = async (
     Id: string,
-    reviewData: {review: string, reviewOutOfTen: number}
+    reviewData: {review: string, reviewOutOfTen: number, movie: string, movieName: string}
 ): Promise<reviewType> => {
     const updatedReview = await prisma.Review.update({
         where: {

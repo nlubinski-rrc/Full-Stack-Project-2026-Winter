@@ -1,23 +1,24 @@
 import * as reviewController from "../controllers/reviewController";
-import { reviewSchema } from "../validation/courseValidation";
+import { reviewSchemas } from "../validation/reviewValidation";
 import express, { Router } from "express";
+import { validateRequest } from "../middleware/validation";
 const router: Router = express.Router();
 
 router.post("/",
-    validateRequest(reviewSchemas.createReview),
+    validateRequest(reviewSchemas.createReviewSchema),
     reviewController.createReview);
 
 router.get("/", reviewController.getAllReviews);
 
-router.get("/:reviewId",
+router.get("/:Id",
     validateRequest(reviewSchemas.findreview),
     reviewController.getReviewByReviewId);
 
-router.delete("/:reviewId",
+router.delete("/:Id",
     validateRequest(reviewSchemas.deleteReview),
     reviewController.deleteReview);
 
-router.put("/:reviewId",
+router.put("/:Id",
     validateRequest(reviewSchemas.updateReview),
     reviewController.updateReview);
 export default router;

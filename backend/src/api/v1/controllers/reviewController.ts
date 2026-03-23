@@ -1,15 +1,9 @@
-import type { reviewType } from "../reviewType";
+import type { reviewType } from "../types/reviewType";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { NextFunction, Request, Response} from "express";
 import { successReply, errorReply } from "../../../models/responseModel";
-import * as reviewServices from "../services/courseServices";
+import * as reviewServices from "../services/reviewServices";
 
-/**
- * Reponsible for creating a course
- * @param req - The request object.
- * @param res - The response object.
- * @param _next - The express middleware chaining function
- */
 export const createReview = async (
     req: Request,
     res: Response,
@@ -30,12 +24,6 @@ export const createReview = async (
     }
 }
 
-/**
- * Responsible for getting a course by its course id
- * @param req - The request object.
- * @param res - The response object.
- * @param _next - The express middleware chaining function
- */
 export const getReviewByReviewId = async (
     req: Request,
     res: Response,
@@ -43,7 +31,7 @@ export const getReviewByReviewId = async (
 ): Promise<void> => {
     try {
         const Id:string = req.body.Id
-        const reviewData:reviewType = await reviewServices.getReviewByReviewId(Id)
+        const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
         res.status(HTTP_STATUS.OK).json(
             successReply(reviewData, "Review retrieved successfully")
         );
@@ -56,12 +44,6 @@ export const getReviewByReviewId = async (
     }
 }
 
-/**
- * Responsible for getting all courses
- * @param req - The request object.
- * @param res - The response object.
- * @param _next - The express middleware chaining function
- */
 export const getAllReviews = async (
     req: Request,
     res: Response,
@@ -81,12 +63,6 @@ export const getAllReviews = async (
     }
 }
 
-/**
- * Responsible for updating a courses info
- * @param req - The request object.
- * @param res - The response object.
- * @param _next - The express middleware chaining function
- */
 export const updateReview = async (
     req: Request,
     res: Response,
@@ -94,8 +70,8 @@ export const updateReview = async (
 ): Promise<void> => {
     try {
         const Id:string = req.params.Id;
-        const { movieName, review, reviewOutOfTen } = req.body;
-        const updatedReviewInfo:reviewType = await reviewServices.updateCourse( Id, {movieName, review, reviewOutOfTen});
+        const { movieName, review, reviewOutOfTen, movie} = req.body;
+        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {movieName, review, reviewOutOfTen, movie});
         res.status(HTTP_STATUS.OK).json(
             successReply(updatedReviewInfo, "Review info updated successfully")
         );
@@ -108,12 +84,6 @@ export const updateReview = async (
     }
 }
 
-/**
- * Responsible for deleting a course
- * @param req - The request object.
- * @param res - The response object.
- * @param _next - The express middleware chaining function
- */
 export const deleteReview = async (
     req: Request,
     res: Response,
