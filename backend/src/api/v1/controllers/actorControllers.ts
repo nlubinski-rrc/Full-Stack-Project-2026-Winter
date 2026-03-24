@@ -26,7 +26,7 @@ export const getActorById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const actor: Actor = await actorServices.getActorById(id);
+        const actor: Actor | null = await actorServices.getActorById(parseInt(id));
 
         if (actor) {
             res.status(HTTP_STATUS.OK).json(
