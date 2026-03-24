@@ -14,10 +14,11 @@ datasource db {
 }
 
 model Review {
-  id String @id @default(uuid())
-  movieName String
+  Id Int @id @default(autoincrement())
   review String
   reviewOutOfTen Int
+
+  movieName String
   movie Movie @relation(fields: [movieName], references: [title])
 }
 

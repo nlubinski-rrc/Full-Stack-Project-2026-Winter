@@ -2,25 +2,30 @@ import { prisma } from "../../../../prisma/client"
 import { reviewType } from "../types/reviewType";
 
 export const createReview = async (reviewData: {
-    Id: string,
+    Id: number,
     movieName: string,
     review: string,
     reviewOutOfTen: number
 }): Promise<reviewType> => {
-    const newReview: reviewType = await prisma.Review.create({
+    return await prisma.review.create({
         data: {
-            ...reviewData
-        }
+            review: reviewData.review,
+            reviewOutOfTen: reviewData.reviewOutOfTen,
+            movie: {
+                connect: {
+                    title: reviewData.movieName
+                }
+            }
+        },
     });
-    return newReview;
 };
 
 export const getAllReviews = async (): Promise<reviewType[]> => {
-    return prisma.Reviews.findMany();
+    return prisma.review.findMany();
 };
 
-export const getReviewByReviewId = async (Id:string): Promise<reviewType | null> => {
-    const review = prisma.Review.findUnique({
+export const getReviewByReviewId = async (Id:number): Promise<reviewType | null> => {
+    const review = prisma.review.findUnique({
         where: {
             Id: Id,
         }})
@@ -32,23 +37,31 @@ export const getReviewByReviewId = async (Id:string): Promise<reviewType | null>
 };
 
 export const updateReview = async (
-    Id: string,
-    reviewData: {review: string, reviewOutOfTen: number, movie: string, movieName: string}
+    Id: number,
+    reviewData: { review: string; reviewOutOfTen: number; movieName: string }
 ): Promise<reviewType> => {
-    const updatedReview = await prisma.Review.update({
+    const updatedReview: reviewType = await prisma.review.update({
         where: {
-            id: Id
+            Id: Id,
         },
         data: {
-            ...reviewData
-        }});
+            review: reviewData.review,
+            reviewOutOfTen: reviewData.reviewOutOfTen,
+            movie: {
+                connect: {
+                    title: reviewData.movieName,
+                },
+            },
+        },
+    });
+
     return updatedReview;
 };
 
-export const deleteReview = async (Id: string): Promise<void> => {
-    await prisma.Review.delete({
+export const deleteReview = async (Id: number): Promise<void> => {
+    await prisma.review.delete({
         where: {
-            id: Id
+            Id: Id
         }
     });
 };

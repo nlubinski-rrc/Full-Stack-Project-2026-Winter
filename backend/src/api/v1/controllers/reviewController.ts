@@ -10,8 +10,8 @@ export const createReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const {Id, movieName, review, reviewOutOfTen} = req.body;
-        const reviewItem: reviewType = await reviewServices.createReview({ Id, movieName ,review, reviewOutOfTen});
+        const {Id, movieName, review, reviewOutOfTen } = req.body;
+        const reviewItem: reviewType = await reviewServices.createReview({ Id, movieName ,review, reviewOutOfTen });
         res.status(HTTP_STATUS.CREATED).json(
             successReply(reviewItem, "Review created successfully")
         );
@@ -30,7 +30,7 @@ export const getReviewByReviewId = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const Id:string = req.body.Id
+        const Id:number = req.body.Id
         const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
         res.status(HTTP_STATUS.OK).json(
             successReply(reviewData, "Review retrieved successfully")
@@ -69,9 +69,9 @@ export const updateReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const Id:string = req.params.Id;
-        const { movieName, review, reviewOutOfTen, movie} = req.body;
-        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {movieName, review, reviewOutOfTen, movie});
+        const Id:number = Number(req.params.Id);
+        const { movieName, review, reviewOutOfTen} = req.body;
+        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {movieName, review, reviewOutOfTen});
         res.status(HTTP_STATUS.OK).json(
             successReply(updatedReviewInfo, "Review info updated successfully")
         );
@@ -90,7 +90,7 @@ export const deleteReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const review:string = req.params.Id;
+        const review = Number(req.params.Id);
         await reviewServices.deleteReview(review);
         res.status(HTTP_STATUS.OK).json(
             successReply(review, "Review info deleted successfully")
