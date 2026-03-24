@@ -2,7 +2,6 @@ import { prisma } from "../../../../prisma/client"
 import { reviewType } from "../types/reviewType";
 
 export const createReview = async (reviewData: {
-    Id: number,
     movieName: string,
     review: string,
     reviewOutOfTen: number
@@ -11,11 +10,7 @@ export const createReview = async (reviewData: {
         data: {
             review: reviewData.review,
             reviewOutOfTen: reviewData.reviewOutOfTen,
-            movie: {
-                connect: {
-                    title: reviewData.movieName
-                }
-            }
+            movieName: reviewData.movieName
         },
     });
 };

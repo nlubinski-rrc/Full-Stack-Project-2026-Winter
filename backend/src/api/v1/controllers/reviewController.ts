@@ -10,12 +10,14 @@ export const createReview = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const {Id, movieName, review, reviewOutOfTen } = req.body;
-        const reviewItem: reviewType = await reviewServices.createReview({ Id, movieName ,review, reviewOutOfTen });
+        const {movieName, review, reviewOutOfTen } = req.body;
+        console.log(movieName, review, reviewOutOfTen )
+        const reviewItem: reviewType = await reviewServices.createReview({ movieName ,review, reviewOutOfTen });
         res.status(HTTP_STATUS.CREATED).json(
             successReply(reviewItem, "Review created successfully")
         );
     } catch (error: unknown) {
+        console.error("FULL ERROR:", error); // 👈 add this
         const errorMessage = error instanceof Error ? error.message : String(error);
             console.error(errorMessage);
         res.status(HTTP_STATUS.BAD_REQUEST).json(

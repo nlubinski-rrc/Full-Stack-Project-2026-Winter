@@ -25,7 +25,7 @@ app.get("/api/v1/health", (req, res) => {
     };
     res.json(healthData);
 });
-
+console.log("DATABASE_URL=", process.env.DATABASE_URL);
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);

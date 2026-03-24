@@ -131,7 +131,17 @@ const reviews = [
         movieName: "Supercell",
         review: "I did not like this movie, I thought it sucked.",
         reviewOutOfTen: 2
-    }
+    },
+    {
+        movieName: "The Pope's Exorcist",
+        review: "Pretty decent movie russle crow was great as always",
+        reviewOutOfTen: 5
+    },
+    {
+        movieName: "Cocaine Bear",
+        review: "A very hectic movie that is based on a true story",
+        reviewOutOfTen: 6
+    },
 ]
 
 export {movies, reviews}
