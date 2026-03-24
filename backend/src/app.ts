@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
 import employeeRoutes from "./api/v1/routes/employeeRoutes"
+import movieRoutes from "./api/v1/routes/movieRoutes"
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";
@@ -25,6 +26,8 @@ app.get("/api/v1/health", (req, res) => {
     };
     res.json(healthData);
 });
+
+app.get("/api/v1/movies", movieRoutes)
 
 app.use(accessLogger);
 app.use(errorLogger);
