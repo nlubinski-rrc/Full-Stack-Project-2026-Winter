@@ -20,6 +20,6 @@
             "*": ["*"]
         }
     },
-    "include": ["src/**/*", "test/**/*", "config/**/*"],
+    "include": ["src/**/*", "test/**/*", "config/**/*", "prisma.config.ts"],
     "exclude": ["node_modules", "dist"]
 }

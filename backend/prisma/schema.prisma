@@ -17,8 +17,6 @@ model Review {
   Id Int @id @default(autoincrement())
   review String
   reviewOutOfTen Int
-
-  movieName String
   movie Movie @relation(fields: [movieName], references: [title])
 }
 
@@ -53,3 +51,4 @@ model ActorMovie {
   movieId Int
   @@id([actorId, movieId])
 }
+
