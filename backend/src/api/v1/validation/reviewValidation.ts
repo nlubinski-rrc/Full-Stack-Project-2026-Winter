@@ -19,7 +19,7 @@ export const reviewSchemas = {
             })
         })
     },
-    findreview: {
+    findReview: {
         body: Joi.object({
             Id: Joi.string().required().messages({
                 "any.required": "Id is required",
@@ -39,11 +39,6 @@ export const reviewSchemas = {
     },
     updateReview: {
         body: Joi.object({
-            Id: Joi.string().required().messages({
-                "any.required": "Id is required",
-                "string.empty": "Id should not be empty",
-                "string.base": "Id should be a string"
-            }),
             review: Joi.string().min(30).required().messages({
                 "any.required": "Id is required",
                 "string.empty": "Id should not be empty",

@@ -24,6 +24,7 @@ export const getReviewByReviewId = async (Id:number): Promise<reviewType | null>
         where: {
             Id: Id,
         }})
+    console.log(review)
     if(!review) {
         return null;
     } else{
@@ -33,7 +34,7 @@ export const getReviewByReviewId = async (Id:number): Promise<reviewType | null>
 
 export const updateReview = async (
     Id: number,
-    reviewData: { review: string; reviewOutOfTen: number; movieName: string }
+    reviewData: { review: string; reviewOutOfTen: number;}
 ): Promise<reviewType> => {
     const updatedReview: reviewType = await prisma.review.update({
         where: {
@@ -42,14 +43,8 @@ export const updateReview = async (
         data: {
             review: reviewData.review,
             reviewOutOfTen: reviewData.reviewOutOfTen,
-            movie: {
-                connect: {
-                    title: reviewData.movieName,
-                },
-            },
         },
     });
-
     return updatedReview;
 };
 

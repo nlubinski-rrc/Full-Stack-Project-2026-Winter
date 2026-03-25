@@ -11,7 +11,7 @@ router.post("/",
 router.get("/", reviewController.getAllReviews);
 
 router.get("/:Id",
-    validateRequest(reviewSchemas.findreview),
+    validateRequest(reviewSchemas.findReview),
     reviewController.getReviewByReviewId);
 
 router.delete("/:Id",

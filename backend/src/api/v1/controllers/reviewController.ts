@@ -17,7 +17,6 @@ export const createReview = async (
             successReply(reviewItem, "Review created successfully")
         );
     } catch (error: unknown) {
-        console.error("FULL ERROR:", error); // 👈 add this
         const errorMessage = error instanceof Error ? error.message : String(error);
             console.error(errorMessage);
         res.status(HTTP_STATUS.BAD_REQUEST).json(
@@ -32,7 +31,8 @@ export const getReviewByReviewId = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const Id:number = req.body.Id
+        const Id = Number(req.params.Id)
+        console.log(Id)
         const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
         res.status(HTTP_STATUS.OK).json(
             successReply(reviewData, "Review retrieved successfully")
@@ -72,8 +72,8 @@ export const updateReview = async (
 ): Promise<void> => {
     try {
         const Id:number = Number(req.params.Id);
-        const { movieName, review, reviewOutOfTen} = req.body;
-        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {movieName, review, reviewOutOfTen});
+        const {review, reviewOutOfTen} = req.body;
+        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {review, reviewOutOfTen});
         res.status(HTTP_STATUS.OK).json(
             successReply(updatedReviewInfo, "Review info updated successfully")
         );
