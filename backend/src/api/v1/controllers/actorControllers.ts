@@ -64,7 +64,6 @@ export const updateActor = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        //const { name, isFavourite } = req.body;
 
         const updatedActor: Actor = await actorServices.updateActor(parseInt(id), req.body);
         res.status(HTTP_STATUS.OK).json(
