@@ -15,6 +15,7 @@ datasource db {
 
 model Review {
   Id Int @id @default(autoincrement())
+  movieName String
   review String
   reviewOutOfTen Int
   movie Movie @relation(fields: [movieName], references: [title])

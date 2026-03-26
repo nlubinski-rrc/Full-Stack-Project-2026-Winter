@@ -6,6 +6,7 @@ export const getWatchlist = async (req: any, res: any) => {
 };
 
 export const addToWatchlist = async (req: any, res: any) => {
+    console.log("BODY:", req.body);
     const item = req.body;
     await watchlistService.add(item);
     res.status(201).json({ message: "Added" });

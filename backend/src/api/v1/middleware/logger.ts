@@ -1,26 +1,35 @@
 import morgan, { StreamOptions } from "morgan";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 /**
- * This document creates a file for error logs for the error codes 4xx-5xx 
- * it depicts the area where the logs will be made as well
+ * Fix for __dirname in ES modules
+ */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/**
+ * Create logs directory
  */
 const logsDir = path.join(__dirname, "../../../logs");
+
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
 
-const accessLogStream = fs.createWriteStream(path.join(logsDir,"access.log"), {
+const accessLogStream = fs.createWriteStream(path.join(logsDir, "access.log"), {
     flags: "a",
 });
+
 const errorLogStream: StreamOptions = {
     write: (message) =>
         fs.appendFileSync(path.join(logsDir, "error.log"), message),
 };
+
 const accessLogger = morgan("combined", { stream: accessLogStream });
 
-const errorLogger = morgan("combined",{
+const errorLogger = morgan("combined", {
     stream: errorLogStream,
     skip: (req, res) => res.statusCode < 400,
 });
