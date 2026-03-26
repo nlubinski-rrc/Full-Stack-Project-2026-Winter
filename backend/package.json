@@ -8,7 +8,9 @@
         "docker:down": "docker compose down",
         "test": "npm run docker:up && npx prisma migrate deploy && jest -i",
         "start": "tsx src/server.ts",
-        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html"
+        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
+        "postinstall": "prisma generate",
+        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build"
     },
     "prisma": {
         "seed": "ts-node --transpile-only prisma/seed.ts"
@@ -24,7 +26,7 @@
         "express": "^5.1.0",
         "firebase-admin": "^13.6.0",
         "helmet": "^8.1.0",
-        "joi": "^18.0.1",
+        "joi": "^18.1.1",
         "morgan": "^1.10.1",
         "nodemailer": "^7.0.10",
         "pg": "^8.20.0",
@@ -37,6 +39,7 @@
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.2",
         "@types/jest": "^29.5.14",
+        "@types/joi": "^17.2.2",
         "@types/morgan": "^1.9.10",
         "@types/node": "^22.19.15",
         "@types/supertest": "^7.2.0",
