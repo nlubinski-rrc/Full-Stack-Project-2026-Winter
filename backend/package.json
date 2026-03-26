@@ -10,7 +10,8 @@
         "start": "tsx src/server.ts",
         "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
         "postinstall": "prisma generate",
-        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build"
+        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
+        "build": "tsc"
     },
     "prisma": {
         "seed": "ts-node --transpile-only prisma/seed.ts"
