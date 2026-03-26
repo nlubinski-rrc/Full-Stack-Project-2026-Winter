@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
-import employeeRoutes from "./api/v1/routes/employeeRoutes"
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";
@@ -9,6 +8,7 @@ import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/lo
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import actorRoutes from "./api/v1/routes/actorRoutes";
 
 const app:Express = express();
 
@@ -38,7 +38,8 @@ app.use(cors(getCorsConfig()));
 
 app.use(morgan("combined"));
 app.use(express.json());
-app.use("/api/v1", employeeRoutes)
+
+app.use("/api/v1/actors", actorRoutes);
 
 setupSwagger(app);
 export default app;

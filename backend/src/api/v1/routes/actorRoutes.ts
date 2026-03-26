@@ -15,19 +15,19 @@ router.get(
     actorController.getActorById
 );
 
-router.post(
-    "/",
-    actorController.createActor
-);
+// router.post(
+//     "/",
+//     actorController.createActor
+// );
 
-router.put(
-    "/:id",
-    actorController.updateActor
-);
+// router.put(
+//     "/:id",
+//     actorController.updateActor
+// );
 
-router.delete(
-    "/:id",
-    actorController.deleteActor
-);
+// router.delete(
+//     "/:id",
+//     actorController.deleteActor
+// );
 
 export default router;
