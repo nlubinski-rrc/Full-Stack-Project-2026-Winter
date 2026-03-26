@@ -7,7 +7,7 @@ export const getAllActors = async(): Promise<Actor[]> => {
 
 export const getActorById = async(id: number): Promise<Actor | null> => {
     try {
-        const actor = prisma.actor.findUnique({
+        const actor: Actor | null = await prisma.actor.findUnique({
             where: {
                 id: id
             }

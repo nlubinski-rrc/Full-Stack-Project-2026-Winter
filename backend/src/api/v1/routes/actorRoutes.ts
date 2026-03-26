@@ -20,10 +20,10 @@ router.get(
 //     actorController.createActor
 // );
 
-// router.put(
-//     "/:id",
-//     actorController.updateActor
-// );
+router.put(
+    "/:id",
+    actorController.updateActor
+);
 
 // router.delete(
 //     "/:id",

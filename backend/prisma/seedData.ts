@@ -132,6 +132,49 @@ const reviews = [
         review: "I did not like this movie, I thought it sucked.",
         reviewOutOfTen: 2
     }
-]
+];
 
-export {movies, reviews}
+const actors = [
+    {
+        name: "Ryan Gosling",
+        isFavorite: false
+    },
+    {
+        name: "Harrison Ford",
+        isFavorite: false
+    },
+    {
+        name: "Ana de Armas",
+        isFavorite: false
+    },
+    {
+        name: "Dave Bautista",
+        isFavorite: false
+    },
+    {
+        name: "Robin Wright",
+        isFavorite: false
+    },
+    {
+        name: "Chris Pratt",
+        isFavorite: false
+    },
+    {
+        name: "Charlie Day",
+        isFavorite: false
+    },
+    {
+        name: "Jack Black",
+        isFavorite: false
+    },
+    {
+        name: "Seth Rogen",
+        isFavorite: false
+    },
+    {
+        name: "Anya Taylor-Joy",
+        isFavorite: false
+    }
+];
+
+export {movies, reviews, actors}
