@@ -1,0 +1,9 @@
+{
+   "relatedProjects": ["prj_tag6UlYUcZGEWQmHXNNecvm1M6A8"],
+   "rewrites": [
+      {
+            "source": "/(.*)",
+            "destination": "/api" 
+      }
+   ]
+}
