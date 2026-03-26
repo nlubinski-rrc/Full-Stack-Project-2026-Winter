@@ -57,23 +57,23 @@ export const getActorById = async (
 //     }
 // };
 
-// export const updateActor = async (
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-// ): Promise<void> => {
-//     try {
-//         const { id } = req.params;
-//         //const { name, isFavourite } = req.body;
+export const updateActor = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { id } = req.params;
+        //const { name, isFavourite } = req.body;
 
-//         const updatedActor: Actor = await actorServices.updateActor(req.body);
-//         res.status(HTTP_STATUS.OK).json(
-//             successReply(updatedActor, "Actor updated successfully")
-//         );
-//     } catch (error: unknown) {
-//         next(error);
-//     }
-// };
+        const updatedActor: Actor = await actorServices.updateActor(parseInt(id), req.body);
+        res.status(HTTP_STATUS.OK).json(
+            successReply(updatedActor, "Actor updated successfully")
+        );
+    } catch (error: unknown) {
+        next(error);
+    }
+};
 
 // export const deleteActor = async (
 //     req: Request,

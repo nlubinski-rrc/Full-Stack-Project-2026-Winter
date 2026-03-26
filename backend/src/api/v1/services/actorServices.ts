@@ -22,3 +22,19 @@ export const getActorById = async(id: number): Promise<Actor | null> => {
         throw new Error(`Failed to retrieve actor with ID ${id}`);
     }
 }
+
+export const updateActor = async(
+    id: number,
+    actorData: {isFavourite: boolean}
+): Promise<Actor> => {
+    const updateActor = await prisma.actor.update({
+        where: {
+            id: id
+        },
+        data: {
+            ...actorData
+        }
+    });
+
+    return structuredClone(updateActor);
+}
