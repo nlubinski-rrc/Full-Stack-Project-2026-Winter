@@ -8,7 +8,9 @@
         "docker:down": "docker compose down",
         "test": "npm run docker:up && npx prisma migrate deploy && jest -i",
         "start": "tsx src/server.ts",
-        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html"
+        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
+        "postinstall": "prisma generate",
+        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build"
     },
     "prisma": {
         "seed": "ts-node --transpile-only prisma/seed.ts"
