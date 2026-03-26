@@ -7,6 +7,6 @@ router.get("/", movieController.getAllMovies)
 
 router.get("/:id", movieController.getMovieById)
 
-router.get("/:title", movieController.getMovieByTitle)
+router.get("/titles/:title", movieController.getMovieByTitle)
 
 export default router

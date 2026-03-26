@@ -24,7 +24,7 @@ export const getMovieById = async(
     try {
         const movie: Movie | null = await movieService.getMovieById(Number.parseInt(req.params.id))
         if (movie) {
-            res.status(200).json(successResponse(movieService, "Movie successfully retrieved"))
+            res.status(200).json(successResponse(movie, "Movie successfully retrieved"))
         } else {
             throw new Error(`Movie Id ${req.body.id} not found`)
         }
@@ -42,7 +42,7 @@ export const getMovieByTitle = async(
     try {
         const movie: Movie | null = await movieService.getMovieByTitle((req.params.title))
         if (movie) {
-            res.status(200).json(successResponse(movieService, "Movie successfully retrieved"))
+            res.status(200).json(successResponse(movie, "Movie successfully retrieved"))
         } else {
             throw new Error(`Movie Id ${req.body.title} not found`)
         }

@@ -27,7 +27,7 @@ app.get("/api/v1/health", (req, res) => {
     res.json(healthData);
 });
 
-app.get("/api/v1/movies", movieRoutes)
+app.use("/api/v1/movies", movieRoutes)
 
 app.use(accessLogger);
 app.use(errorLogger);
