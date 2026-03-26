@@ -14,8 +14,7 @@ datasource db {
 }
 
 model Review {
-  id String @id @default(uuid())
-  movieName String
+  Id Int @id @default(autoincrement())
   review String
   reviewOutOfTen Int
   movie Movie @relation(fields: [movieName], references: [title])
@@ -29,6 +28,7 @@ model Movie {
   releaseDate String
   wishlists Watchlist[]
   reviews Review[]
+  movieActors ActorMovie[]
 }
 
 model Watchlist {
@@ -36,3 +36,19 @@ model Watchlist {
   movieId Int
   movie Movie @relation(fields: [movieId], references: [id])
 }
+
+model Actor {
+  id Int @id @default(autoincrement())
+  name String
+  isFavourite Boolean
+  actorMovies ActorMovie[]
+}
+
+model ActorMovie {
+  actor Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  actorId Int
+  movieId Int
+  @@id([actorId, movieId])
+}
+

@@ -26,6 +26,22 @@ async function main() {
     for (const review of reviews) {
         const result = await prisma.review.create({
             data: {
+                review: review.review,
+                reviewOutOfTen: review.reviewOutOfTen,
+                movie: {
+                    connect: {
+                        title: review.movieName,
+                    },
+                },
+
+            },
+        });
+        console.log(result);
+    }
+
+    for (const review of reviews) {
+        const result = await prisma.review.create({
+            data: {
                 movieName: review.movieName,
                 review: review.review,
                 reviewOutOfTen: review.reviewOutOfTen

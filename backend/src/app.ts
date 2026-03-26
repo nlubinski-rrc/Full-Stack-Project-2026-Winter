@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
-import employeeRoutes from "./api/v1/routes/employeeRoutes"
+import movieRoutes from "./api/v1/routes/movieRoutes"
+import reviewRoutes from "./api/v1/routes/reviewRoutes"
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";
@@ -26,6 +27,9 @@ app.get("/api/v1/health", (req, res) => {
     res.json(healthData);
 });
 
+app.use("/api/v1/movies", movieRoutes)
+
+console.log("DATABASE_URL=", process.env.DATABASE_URL);
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);
@@ -38,7 +42,7 @@ app.use(cors(getCorsConfig()));
 
 app.use(morgan("combined"));
 app.use(express.json());
-app.use("/api/v1", employeeRoutes)
+app.use("/reviews", reviewRoutes)
 
 setupSwagger(app);
 export default app;
