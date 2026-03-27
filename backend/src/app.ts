@@ -39,6 +39,10 @@ app.use(helmet(getHelmetConfig()));
 app.use(cors());
 app.use(cors(getCorsConfig()));
 
+app.get("/", (_req, res) => {
+    res.send("got response")
+})
+
 
 app.use(morgan("combined"));
 app.use(express.json());
