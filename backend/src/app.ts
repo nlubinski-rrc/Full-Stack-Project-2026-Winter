@@ -28,9 +28,6 @@ app.get("/api/v1/health", (req, res) => {
     res.json(healthData);
 });
 
-app.use("/api/v1/movies", movieRoutes)
-
-console.log("DATABASE_URL=", process.env.DATABASE_URL);
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);
@@ -44,8 +41,9 @@ app.use(cors(getCorsConfig()));
 app.use(morgan("combined"));
 app.use(express.json());
 
+app.use("/api/v1/movies", movieRoutes)
 app.use("/api/v1/actors", actorRoutes);
-app.use("/reviews", reviewRoutes)
+app.use("/api/v1/reviews", reviewRoutes)
 
 setupSwagger(app);
 export default app;

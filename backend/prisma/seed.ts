@@ -39,17 +39,6 @@ async function main() {
         console.log(result);
     }
 
-    for (const review of reviews) {
-        const result = await prisma.review.create({
-            data: {
-                movieName: review.movieName,
-                review: review.review,
-                reviewOutOfTen: review.reviewOutOfTen
-            }
-        })
-        console.log(result)
-    }
-
     for (const actor of actors) {
         const result = await prisma.actor.create({
             data: {

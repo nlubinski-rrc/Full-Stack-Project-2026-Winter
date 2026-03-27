@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as actorServices from "../services/actorServices";
-import { successReply, errorReply} from "../../../models/responseModel";
+import { successResponse, errorResponse} from "../../../models/responseModel";
 import { Actor } from "../../../models/actorModel";
 
 export const getAllActors = async (
@@ -12,7 +12,7 @@ export const getAllActors = async (
     try {
         const actors: Actor[] = await actorServices.getAllActors();
         res.status(HTTP_STATUS.OK).json(
-            successReply(actors, "Actors retrieved successfully")
+            successResponse(actors, "Actors retrieved successfully")
         );
     } catch (error: unknown) {
         next(error);
@@ -30,11 +30,11 @@ export const getActorById = async (
 
         if (actor) {
             res.status(HTTP_STATUS.OK).json(
-                successReply(actor, "Actor retrieved successfully")
+                successResponse(actor, "Actor retrieved successfully")
             );
         } else {
             res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorReply(`Actor with ID ${id} not found`)
+                errorResponse(`Actor with ID ${id} not found`)
             );
         }
     } catch (error: unknown) {
@@ -67,7 +67,7 @@ export const updateActor = async (
 
         const updatedActor: Actor = await actorServices.updateActor(parseInt(id), req.body);
         res.status(HTTP_STATUS.OK).json(
-            successReply(updatedActor, "Actor updated successfully")
+            successResponse(updatedActor, "Actor updated successfully")
         );
     } catch (error: unknown) {
         next(error);
