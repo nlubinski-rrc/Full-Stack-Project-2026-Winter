@@ -15,6 +15,7 @@ datasource db {
 
 model Review {
   Id Int @id @default(autoincrement())
+  movieName String
   review String
   reviewOutOfTen Int
   movie Movie @relation(fields: [movieName], references: [title])
@@ -28,7 +29,7 @@ model Movie {
   releaseDate String
   wishlists Watchlist[]
   reviews Review[]
-  movieActors ActorMovie[]
+  movieActors Actor[]
 }
 
 model Watchlist {
@@ -41,14 +42,13 @@ model Actor {
   id Int @id @default(autoincrement())
   name String
   isFavourite Boolean
-  actorMovies ActorMovie[]
+  actorMovies Movie[]
 }
 
-model ActorMovie {
-  actor Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
-  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  actorId Int
-  movieId Int
-  @@id([actorId, movieId])
-}
-
+// model ActorMovie {
+//   actor Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
+//   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+//   actorId Int
+//   movieId Int
+//   @@id([actorId, movieId])
+// }
