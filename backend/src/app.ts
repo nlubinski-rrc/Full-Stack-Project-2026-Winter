@@ -10,6 +10,7 @@ import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/lo
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import actorRoutes from "./api/v1/routes/actorRoutes";
 
 const app:Express = express();
 
@@ -27,9 +28,6 @@ app.get("/api/v1/health", (req, res) => {
     res.json(healthData);
 });
 
-app.use("/api/v1/movies", movieRoutes)
-
-console.log("DATABASE_URL=", process.env.DATABASE_URL);
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);
@@ -39,10 +37,17 @@ app.use(helmet(getHelmetConfig()));
 app.use(cors());
 app.use(cors(getCorsConfig()));
 
+app.get("/", (_req, res) => {
+    res.send("got response")
+})
+
 
 app.use(morgan("combined"));
 app.use(express.json());
-app.use("/reviews", reviewRoutes)
+
+app.use("/api/v1/movies", movieRoutes)
+app.use("/api/v1/actors", actorRoutes);
+app.use("/api/v1/reviews", reviewRoutes)
 
 setupSwagger(app);
 export default app;

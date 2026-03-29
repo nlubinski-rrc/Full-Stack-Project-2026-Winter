@@ -1,11 +1,12 @@
 import { prisma } from "../../../../prisma/client"
-import { reviewType } from "../types/reviewType";
+//import { reviewType } from "../types/reviewType";
+import { Review } from "../../../../generated/prisma/client";
 
 export const createReview = async (reviewData: {
     movieName: string,
     review: string,
     reviewOutOfTen: number
-}): Promise<reviewType> => {
+}): Promise<Review> => {
     return await prisma.review.create({
         data: {
             review: reviewData.review,
@@ -15,7 +16,7 @@ export const createReview = async (reviewData: {
     });
 };
 
-export const getAllReviews = async (): Promise<reviewType[]> => {
+export const getAllReviews = async (): Promise<Review[]> => {
     return prisma.review.findMany();
 };
 

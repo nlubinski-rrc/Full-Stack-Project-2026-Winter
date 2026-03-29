@@ -1,4 +1,5 @@
-import type { reviewType } from "../types/reviewType";
+//import type { reviewType } from "../types/reviewType";
+import { Review } from "../../../../generated/prisma/client";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { NextFunction, Request, Response} from "express";
 import { successResponse, errorResponse } from "../../../models/responseModel";
@@ -12,7 +13,7 @@ export const createReview = async (
     try {
         const {movieName, review, reviewOutOfTen } = req.body;
         console.log(movieName, review, reviewOutOfTen )
-        const reviewItem: reviewType = await reviewServices.createReview({ movieName ,review, reviewOutOfTen });
+        const reviewItem: Review = await reviewServices.createReview({ movieName ,review, reviewOutOfTen });
         res.status(HTTP_STATUS.CREATED).json(
             successResponse(reviewItem, "Review created successfully")
         );
@@ -52,7 +53,7 @@ export const getAllReviews = async (
     _next: NextFunction
 ): Promise<void> => {
     try {
-        const reviewData: reviewType[] = await reviewServices.getAllReviews();
+        const reviewData: Review[] = await reviewServices.getAllReviews();
         res.status(HTTP_STATUS.OK).json(
             successResponse(reviewData,"Review list retrieved successfully")
         );

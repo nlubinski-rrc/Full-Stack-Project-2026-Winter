@@ -6,7 +6,7 @@ import path from "path";
  * This document creates a file for error logs for the error codes 4xx-5xx 
  * it depicts the area where the logs will be made as well
  */
-const logsDir = path.join(__dirname, "../../../logs");
+const logsDir = path.join(import.meta.dirname, "../../../logs");
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
