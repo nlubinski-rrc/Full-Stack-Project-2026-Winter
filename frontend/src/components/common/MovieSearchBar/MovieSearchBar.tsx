@@ -1,17 +1,22 @@
 import { useState } from "react";
-import movieData from "../../../../testMovieData.json";
 import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
-import type { JSX } from "react";
 import type { Watchlist } from "../../../types/watchlistType";
+import movies from "../jsonMovies";
 
 type SearchBarProps = {
     addItemToList: React.Dispatch<React.SetStateAction<Watchlist>>;
 };
 
 function MovieSearchBar({ addItemToList }: SearchBarProps) {
-    const [searchQuery, setQuery] = useState("");
-    const [filteredResults, setResults] = useState<JSX.Element[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredMovies =
+        searchTerm.trim() === ""
+            ? []
+            : movies.filter((movie) =>
+                  movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+              );
 
     function addToWatchlist(movieId: number, movieTitle: string) {
         addItemToList((prev) => {
@@ -26,24 +31,33 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
         });
     }
 
-    function searchData(e?: React.FormEvent) {
-        if (e) {
-            e.preventDefault();
-        }
+    return (
+        <form>
+            <div id="input-fields">
+                <input
+                    type="search"
+                    placeholder="Search Movies"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
 
-        const movieResults = [];
-        let recordsPrinted = 0;
-        for (const movie of movieData["results"]) {
-            if (
-                movie.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-                recordsPrinted < 4
-            ) {
-                recordsPrinted += 1;
-                movieResults.push(
+            <p>Results</p>
+
+            <div id="search-results">
+                {filteredMovies.length === 0 && searchTerm !== "" && (
+                    <p>No results found</p>
+                )}
+
+                {filteredMovies.map((movie) => (
                     <div key={movie.id}>
                         <div id="results">
                             <MovieCard
-                                movie={[movie.title, movie.vote_average.toString(), movie.overview]}
+                                movie={[
+                                    movie.title,
+                                    movie.rating.toString(),
+                                    movie.description,
+                                ]}
                             />
                         </div>
                         <button
@@ -54,32 +68,8 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
                             Add to Watchlist
                         </button>
                     </div>
-                );
-            }
-        }
-        setResults(movieResults);
-    }
-    function updateResults(searchValue: string) {
-        if (searchValue === "") {
-            setResults([]);
-        } else {
-            setQuery(searchValue);
-            searchData();
-        }
-    }
-    return (
-        <form>
-            <div id="input-fields">
-                <input
-                    type="search"
-                    placeholder="Seach Movies"
-                    onChange={(e) => updateResults(e.target.value)}
-                />
+                ))}
             </div>
-
-            <p>Results</p>
-
-            <div id="search-results">{filteredResults}</div>
         </form>
     );
 }

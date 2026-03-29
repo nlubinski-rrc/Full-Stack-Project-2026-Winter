@@ -13,6 +13,7 @@ import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/lo
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import actorRoutes from "./api/v1/routes/actorRoutes";
 
 const app:Express = express();
 

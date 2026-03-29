@@ -4,7 +4,7 @@ import app from "./app";
 import { Server } from "http";
 
 // initialize a port as either a string or 3000 by default
-const PORT: string | 5000 = process.env.PORT || 5000;
+const PORT: string | number = process.env.PORT || 3000;
 
 // initialize server for the application to listen for requests on the specified ports
 const server: Server = app.listen(PORT, () => {
