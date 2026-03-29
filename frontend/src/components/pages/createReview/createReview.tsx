@@ -37,13 +37,13 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             }
         });
     function saveText() {
-        if (text.length < 30) {
-            setError("review has to be longer than 30 characters")
-            return
-        }
         if (!selectedMovieId) {
             setError("Please select a movie.");
-            return;
+            return false;
+        }
+        if (text.length < 30) {
+            setError("review has to be longer than 30 characters")
+            return false;
         }
         const newReview: reviewType = {
             Id: crypto.randomUUID(),
@@ -52,6 +52,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             reviewOutOfTen: reviewOutOfTen
         };
         addReview(newReview);
+        return true;
     };
     function checkMovieList() {
         setWatchlist(prev => ({
@@ -68,7 +69,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             <div id="createReviewStage">
                 <label htmlFor="DropDownForMovies" >Select a movie:</label>
                 <select id="DropDownForMovies" value={selectedMovieId} onChange={e => setSelectedMovieId(e.target.value)}>
-                    <option value="SelectedMovie">Select a movie</option>
+                    <option value="">Select a movie</option>
                     {availableMovies.map(movie => (
                         <option key={movie.title} value={movie.title}>
                             {movie.title}
@@ -90,9 +91,10 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 </select>
                 <label htmlFor="createTheReview">Leave a review here:</label>
                 <textarea id="createTheReview" value={text} onChange={handleChange} style={{width: '300px', height: '50px'}}>--Review message--</textarea>
-                <button onClick={() => {saveText();checkMovieList();}}>
+                <button onClick={() => { if (saveText()) { checkMovieList(); } }}>
                     Submit review
                 </button>
+                <p>{error}</p>
             </div>
             <div id="reviewStage">
                 <h2>Recent reviews:</h2>
@@ -108,7 +110,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                     </li>
                 ))}
                 </ol>
-                <p>{error}</p>
+                
             </div>
             <h2>Watchlist:</h2>
             <div>
