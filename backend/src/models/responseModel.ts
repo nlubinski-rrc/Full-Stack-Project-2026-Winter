@@ -16,7 +16,7 @@ interface PossibleResponse<T> {
  * @param message - A message providing additional information about the response
  * @returns
  */
-export const successReply = <T>(data: T,message?: string): PossibleResponse<T> => ({
+export const successResponse = <T>(data: T,message?: string): PossibleResponse<T> => ({
     status: "success",
     data,
     message,
@@ -28,7 +28,7 @@ export const successReply = <T>(data: T,message?: string): PossibleResponse<T> =
  * @param code - Optional error code for debugging
  * @returns
  */
-export const errorReply = (message: string,code?: string): PossibleResponse<null> => ({
+export const errorResponse = (message: string,code?: string): PossibleResponse<null> => ({
     status: "error",
     error: message,
     code,

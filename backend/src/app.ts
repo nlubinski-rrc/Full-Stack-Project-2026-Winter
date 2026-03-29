@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
-import employeeRoutes from "./api/v1/routes/employeeRoutes"
+import movieRoutes from "./api/v1/routes/movieRoutes"
+import reviewRoutes from "./api/v1/routes/reviewRoutes"
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";
@@ -9,6 +10,7 @@ import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/lo
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import actorRoutes from "./api/v1/routes/actorRoutes";
 
 const app:Express = express();
 
@@ -35,10 +37,17 @@ app.use(helmet(getHelmetConfig()));
 app.use(cors());
 app.use(cors(getCorsConfig()));
 
+app.get("/", (_req, res) => {
+    res.send("got response")
+})
+
 
 app.use(morgan("combined"));
 app.use(express.json());
-app.use("/api/v1", employeeRoutes)
+
+app.use("/api/v1/movies", movieRoutes)
+app.use("/api/v1/actors", actorRoutes);
+app.use("/api/v1/reviews", reviewRoutes)
 
 setupSwagger(app);
 export default app;

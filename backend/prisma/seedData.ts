@@ -118,7 +118,7 @@ const movies = [
     overview: "As viable water is depleted on Earth, a mission is sent to Saturn's moon Titan to retrieve sustainable H2O reserves from its alien inhabitants. But just as the humans acquire the precious resource, they are attacked by Titan rebels, who don't trust that the Earthlings will leave in peace.",
     averageRating: 6,
     releaseDate: "2022-09-30",
-  },
+    },
 ];
 
 const reviews = [
@@ -131,7 +131,63 @@ const reviews = [
         movieName: "Supercell",
         review: "I did not like this movie, I thought it sucked.",
         reviewOutOfTen: 2
-    }
-]
+    },    
+    {
+        movieName: "The Pope's Exorcist",
+        review: "Pretty decent movie russle crow was great as always",
+        reviewOutOfTen: 5
+    },
+    {
+        movieName: "Cocaine Bear",
+        review: "A very hectic movie that is based on a true story",
+        reviewOutOfTen: 6
+    },
+];
 
-export {movies, reviews}
+const actors = [
+    {
+        name: "Ryan Gosling",
+        isFavorite: false
+    },
+    {
+        name: "Harrison Ford",
+        isFavorite: false
+    },
+    {
+        name: "Ana de Armas",
+        isFavorite: false
+    },
+    {
+        name: "Dave Bautista",
+        isFavorite: false
+    },
+    {
+        name: "Robin Wright",
+        isFavorite: false
+    },
+    {
+        name: "Chris Pratt",
+        isFavorite: false
+    },
+    {
+        name: "Charlie Day",
+        isFavorite: false
+    },
+    {
+        name: "Jack Black",
+        isFavorite: false
+    },
+    {
+        name: "Seth Rogen",
+        isFavorite: false
+    },
+    {
+        name: "Anya Taylor-Joy",
+        isFavorite: false
+    }
+];
+   
+
+
+
+export {movies, reviews, actors}

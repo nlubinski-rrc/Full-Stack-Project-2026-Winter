@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
-import {movies, reviews} from "./seedData";
+import {actors, movies, reviews} from "./seedData";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -26,12 +26,26 @@ async function main() {
     for (const review of reviews) {
         const result = await prisma.review.create({
             data: {
-                movieName: review.movieName,
                 review: review.review,
-                reviewOutOfTen: review.reviewOutOfTen
+                reviewOutOfTen: review.reviewOutOfTen,
+                movie: {
+                    connect: {
+                        title: review.movieName,
+                    },
+                },
+
+            },
+        });
+        console.log(result);
+    }
+
+    for (const actor of actors) {
+        const result = await prisma.actor.create({
+            data: {
+                name: actor.name,
+                isFavourite: actor.isFavorite
             }
-        })
-        console.log(result)
+        });
     }
 }
 main()

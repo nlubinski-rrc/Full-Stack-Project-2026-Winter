@@ -1,4 +1,30 @@
 {
+<<<<<<< HEAD
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^7.5.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "prisma": "^7.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+=======
     "name": "debug-demo",
     "version": "1.0.0",
     "main": "index.js",
@@ -7,8 +33,11 @@
         "docker:up": "docker compose up -d",
         "docker:down": "docker compose down",
         "test": "npm run docker:up && npx prisma migrate deploy && jest -i",
-        "start": "ts-node src/server.ts",
-        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html"
+        "start": "tsx src/server.ts",
+        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
+        "postinstall": "prisma generate",
+        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
+        "build": "tsc"
     },
     "prisma": {
         "seed": "ts-node --transpile-only prisma/seed.ts"
@@ -24,7 +53,7 @@
         "express": "^5.1.0",
         "firebase-admin": "^13.6.0",
         "helmet": "^8.1.0",
-        "joi": "^18.0.1",
+        "joi": "^18.1.1",
         "morgan": "^1.10.1",
         "nodemailer": "^7.0.10",
         "pg": "^8.20.0",
@@ -37,6 +66,7 @@
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.2",
         "@types/jest": "^29.5.14",
+        "@types/joi": "^17.2.2",
         "@types/morgan": "^1.9.10",
         "@types/node": "^22.19.15",
         "@types/supertest": "^7.2.0",
@@ -52,4 +82,5 @@
         "tsx": "^4.21.0",
         "typescript": "^5.9.3"
     }
+>>>>>>> 25cb6635819a95a95b038b4d79f8f4afd5abe683
 }

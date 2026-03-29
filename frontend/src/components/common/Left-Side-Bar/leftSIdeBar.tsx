@@ -1,18 +1,23 @@
-import './leftSideBar.css'
-function LeftSideBar(props: {movies:string[]}) {
-    return( 
-    <div id="topFiveMovies">
-        <h2>Top 5 Movies</h2>
-        <ol>
-            <li>{props.movies[0]}</li>
-            <li>{props.movies[1]}</li>
-            <li>{props.movies[2]}</li>
-            <li>{props.movies[3]}</li>
-            <li>{props.movies[4]}</li>
-        </ol>
-        
-    </div>
-    )
+import "./leftSideBar.css";
+
+type Movie = {
+    id: number;
+    title: string;
+    rating: number;
+    description: string;
+};
+
+function LeftSideBar(props: { movies: Movie[] }) {
+    return (
+        <div id="topFiveMovies">
+            <h2>Top 5 Movies</h2>
+            <ol>
+                {props.movies.slice(0, 5).map((movie) => (
+                    <li key={movie.id}>{movie.title}</li>
+                ))}
+            </ol>
+        </div>
+    );
 }
 
-export default LeftSideBar
+export default LeftSideBar;

@@ -1,0 +1,9 @@
+{
+    "relatedProjects": ["<back-end-project-ID>"],
+    "git": {
+        "deploymentEnabled": {
+            "*": false,
+            "main": true
+        }
+    }
+}
