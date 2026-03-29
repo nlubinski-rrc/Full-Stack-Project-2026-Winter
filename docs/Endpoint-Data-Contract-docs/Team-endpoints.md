@@ -59,3 +59,37 @@ Url Parameters:
 | Id               | number | ID of the review |
 
 ---
+
+## Actors
+
+### **GET /**
+
+- Gets all actors
+
+### **GET /:id**
+
+- Gets an actor by id
+URL Parameters:
+
+| Parameter | Type   | Description     |
+|-----------|--------|-----------------|
+| id        | number | ID of the actor |
+
+### **PUT /:id**
+
+- Updates an actors data
+URL Parameters:
+
+| Parameter | Type   | Description     |
+|-----------|--------|-----------------|
+| id        | number | ID of the actor |
+
+Request Body
+
+```json
+{
+    "isFavourite": "boolean"
+}
+```
+
+---
