@@ -5,7 +5,7 @@ export const createReview = async (reviewData: {
     movieName: string,
     review: string,
     reviewOutOfTen: number
-}): Promise<reviewType> => {
+}): Promise<Review> => {
     return await prisma.review.create({
         data: {
             review: reviewData.review,
