@@ -1,8 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
-import movieRoutes from "./api/v1/routes/movieRoutes"
-import reviewRoutes from "./api/v1/routes/reviewRoutes"
+import watchlistRoutes from "./api/v1/routes/watchlistRoutes";
+import movieRoutes from "./api/v1/routes/movieRoutes";
+import reviewRoutes from "./api/v1/routes/reviewRoutes";
+
+
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";
@@ -20,14 +23,6 @@ interface HealthCheckResponse {
     text: string
 }
 
-app.get("/api/v1/health", (req, res) => {
-    const healthData: HealthCheckResponse = {
-        status: "OK",
-        text:"Server is healthy"
-    };
-    res.json(healthData);
-});
-
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);
@@ -36,18 +31,20 @@ app.use(helmet());
 app.use(helmet(getHelmetConfig()));
 app.use(cors());
 app.use(cors(getCorsConfig()));
-
-app.get("/", (_req, res) => {
-    res.send("got response")
-})
-
-
 app.use(morgan("combined"));
 app.use(express.json());
 
-app.use("/api/v1/movies", movieRoutes)
-app.use("/api/v1/actors", actorRoutes);
-app.use("/api/v1/reviews", reviewRoutes)
+app.get("/api/v1/health", (req, res) => {
+    const healthData: HealthCheckResponse = {
+        status: "OK",
+        text: "Server is healthy"
+    };
+    res.json(healthData);
+});
+app.use("/api/v1/movies", movieRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/watchlist", watchlistRoutes);
+
 
 setupSwagger(app);
 export default app;
