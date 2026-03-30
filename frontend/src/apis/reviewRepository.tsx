@@ -1,6 +1,7 @@
 import type { reviewType } from "../types/reviewType";
 
-const BASE_URL = "http://localhost:5000/api/v1/reviews";
+const BASE_URL = "http://localhost:5000";
+const REVIEWS_ENDPOINT = "/api/v1/reviews";
 
 type ApiResponse<T> = {
     status: string;
@@ -11,7 +12,7 @@ type ApiResponse<T> = {
 };
 
 export async function fetchReviews(): Promise<reviewType[]> {
-    const res = await fetch(BASE_URL);
+    const res = await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}`);
     const json: ApiResponse<reviewType[]> = await res.json();
     return json.data ?? [];
 }
@@ -19,7 +20,7 @@ export async function fetchReviews(): Promise<reviewType[]> {
 export async function createReviewRepository(
     review: Omit<reviewType, "Id">
 ): Promise<reviewType> {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export async function createReviewRepository(
 }
 
 export async function deleteReview(reviewId: string) {
-    await fetch(`${BASE_URL}/${reviewId}`, {
+    await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}/${reviewId}`, {
         method: "DELETE",
     });
 }
