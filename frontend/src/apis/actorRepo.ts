@@ -1,6 +1,7 @@
 import type { Actor } from "../types/actor";
 
-const BASE_URL = "http://localhost:3000/api/v1/actors";
+const BASE_URL = "http://localhost:3000";
+const ACTORS_ENDPOINT = "/api/v1/actors";
 
 type BackendActor = {
     id: number;
@@ -22,7 +23,7 @@ function mapBackendActor(actor: BackendActor): Actor {
 }
 
 export async function fetchActors(): Promise<Actor[]> {
-    const res = await fetch(BASE_URL);
+    const res = await fetch(`${BASE_URL}${ACTORS_ENDPOINT}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch actors");
@@ -33,7 +34,7 @@ export async function fetchActors(): Promise<Actor[]> {
 }
 
 export async function getActorById(actorId: number): Promise<Actor> {
-    const res = await fetch(`${BASE_URL}/${actorId}`);
+    const res = await fetch(`${BASE_URL}${ACTORS_ENDPOINT}/${actorId}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch actor");
@@ -46,7 +47,7 @@ export async function getActorById(actorId: number): Promise<Actor> {
 export async function addFavouriteActor(actorId: number): Promise<void> {
     const actor = await getActorById(actorId);
 
-    const res = await fetch(`${BASE_URL}/${actorId}`, {
+    const res = await fetch(`${BASE_URL}${ACTORS_ENDPOINT}/${actorId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export async function addFavouriteActor(actorId: number): Promise<void> {
 export async function deleteFavouriteActor(actorId: number): Promise<void> {
     const actor = await getActorById(actorId);
 
-    const res = await fetch(`${BASE_URL}/${actorId}`, {
+    const res = await fetch(`${BASE_URL}${ACTORS_ENDPOINT}/${actorId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
