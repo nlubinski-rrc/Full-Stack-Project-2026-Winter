@@ -1,6 +1,5 @@
-import { prisma } from "../../../../prisma/client"
-//import { reviewType } from "../types/reviewType";
-import { Review } from "../../../../generated/prisma/client";
+import { prisma } from "../../../../prisma/client";
+import { reviewType } from "../types/reviewType";
 
 export const createReview = async (reviewData: {
     movieName: string,
@@ -16,28 +15,29 @@ export const createReview = async (reviewData: {
     });
 };
 
-export const getAllReviews = async (): Promise<Review[]> => {
-    return prisma.review.findMany();
+export const getAllReviews = async (): Promise<reviewType[]> => {
+    return await prisma.review.findMany();
 };
 
-export const getReviewByReviewId = async (Id:number): Promise<Review | null> => {
-    const review = prisma.review.findUnique({
+export const getReviewByReviewId = async (Id: number): Promise<reviewType | null> => {
+    const review = await prisma.review.findUnique({
         where: {
             Id: Id,
-        }})
-    console.log(review)
-    if(!review) {
+        }
+    });
+
+    if (!review) {
         return null;
-    } else{
-        return review;
     }
+
+    return review;
 };
 
 export const updateReview = async (
     Id: number,
-    reviewData: { review: string; reviewOutOfTen: number;}
-): Promise<Review> => {
-    const updatedReview: Review = await prisma.review.update({
+    reviewData: { review: string; reviewOutOfTen: number; }
+): Promise<reviewType> => {
+    const updatedReview: reviewType = await prisma.review.update({
         where: {
             Id: Id,
         },
@@ -46,6 +46,7 @@ export const updateReview = async (
             reviewOutOfTen: reviewData.reviewOutOfTen,
         },
     });
+
     return updatedReview;
 };
 

@@ -34,7 +34,7 @@ export const getReviewByReviewId = async (
     try {
         const Id = Number(req.params.Id)
         console.log(Id)
-        const reviewData:Review | null = await reviewServices.getReviewByReviewId(Id)
+        const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
         res.status(HTTP_STATUS.OK).json(
             successResponse(reviewData, "Review retrieved successfully")
         );
@@ -74,7 +74,7 @@ export const updateReview = async (
     try {
         const Id:number = Number(req.params.Id);
         const {review, reviewOutOfTen} = req.body;
-        const updatedReviewInfo:Review = await reviewServices.updateReview( Id, {review, reviewOutOfTen});
+        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {review, reviewOutOfTen});
         res.status(HTTP_STATUS.OK).json(
             successResponse(updatedReviewInfo, "Review info updated successfully")
         );

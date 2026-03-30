@@ -1,4 +1,30 @@
 {
+<<<<<<< HEAD
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^7.5.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "prisma": "^7.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+=======
     "name": "debug-demo",
     "version": "1.0.0",
     "main": "index.js",
@@ -23,7 +49,7 @@
     "dependencies": {
         "@prisma/client": "^7.5.0",
         "@types/pg": "^8.11.11",
-        "cors": "^2.8.5",
+        "cors": "^2.8.6",
         "express": "^5.1.0",
         "firebase-admin": "^13.6.0",
         "helmet": "^8.1.0",
@@ -51,9 +77,11 @@
         "jest-mock-extended": "^4.0.0",
         "prisma": "^7.5.0",
         "supertest": "^7.2.2",
+        "trusted-types": "^2.0.0",
         "ts-jest": "^29.2.5",
         "ts-node": "^10.9.2",
         "tsx": "^4.21.0",
         "typescript": "^5.9.3"
     }
+>>>>>>> 25cb6635819a95a95b038b4d79f8f4afd5abe683
 }
