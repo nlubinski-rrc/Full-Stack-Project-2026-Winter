@@ -22,7 +22,7 @@ export const getMovieById = async(
     next: NextFunction    
 ): Promise<void> => {
     try {
-        const movie: Movie | null = await movieService.getMovieById(Number.parseInt(req.params.id))
+        const movie: Movie | null = await movieService.getMovieByTitle(req.params.title as string);
         if (movie) {
             res.status(200).json(successResponse(movie, "Movie successfully retrieved"))
         } else {
@@ -40,7 +40,7 @@ export const getMovieByTitle = async(
     next: NextFunction      
 ): Promise<void> => {
     try {
-        const movie: Movie | null = await movieService.getMovieByTitle((req.params.title))
+        const movie: Movie | null = await movieService.getMovieByTitle(req.params.title as string);
         if (movie) {
             res.status(200).json(successResponse(movie, "Movie successfully retrieved"))
         } else {
