@@ -3,9 +3,6 @@ dotenv.config();
 import express, { Express } from "express";
 import watchlistRoutes from "./api/v1/routes/watchlistRoutes";
 import movieRoutes from "./api/v1/routes/movieRoutes";
-import reviewRoutes from "./api/v1/routes/reviewRoutes";
-
-
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
 import setupSwagger from "../config/swagger";

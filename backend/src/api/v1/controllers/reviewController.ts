@@ -1,4 +1,3 @@
-//import type { reviewType } from "../types/reviewType";
 import { Review } from "../../../../generated/prisma/client";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { NextFunction, Request, Response} from "express";
@@ -26,26 +25,26 @@ export const createReview = async (
     }
 }
 
-export const getReviewByReviewId = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-): Promise<void> => {
-    try {
-        const Id = Number(req.params.Id)
-        console.log(Id)
-        const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(reviewData, "Review retrieved successfully")
-        );
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
-            console.error(errorMessage);
-        res.status(HTTP_STATUS.BAD_REQUEST).json(
-            errorResponse("Review wasnt retrieved")
-        );
-    }
-}
+// export const getReviewByReviewId = async (
+//     req: Request,
+//     res: Response,
+//     _next: NextFunction
+// ): Promise<void> => {
+//     try {
+//         const Id = Number(req.params.Id)
+//         console.log(Id)
+//         const reviewData:reviewType | null = await reviewServices.getReviewByReviewId(Id)
+//         res.status(HTTP_STATUS.OK).json(
+//             successReply(reviewData, "Review retrieved successfully")
+//         );
+//     } catch (error: unknown) {
+//         const errorMessage = error instanceof Error ? error.message : String(error);
+//             console.error(errorMessage);
+//         res.status(HTTP_STATUS.BAD_REQUEST).json(
+//             errorReply("Review wasnt retrieved")
+//         );
+//     }
+// }
 
 export const getAllReviews = async (
     req: Request,
@@ -66,26 +65,26 @@ export const getAllReviews = async (
     }
 }
 
-export const updateReview = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-): Promise<void> => {
-    try {
-        const Id:number = Number(req.params.Id);
-        const {review, reviewOutOfTen} = req.body;
-        const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {review, reviewOutOfTen});
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(updatedReviewInfo, "Review info updated successfully")
-        );
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
-            console.error(errorMessage);
-        res.status(HTTP_STATUS.BAD_REQUEST).json(
-            errorResponse("Review info couldnt be updated")
-        );
-    }
-}
+// export const updateReview = async (
+//     req: Request,
+//     res: Response,
+//     _next: NextFunction
+// ): Promise<void> => {
+//     try {
+//         const Id:number = Number(req.params.Id);
+//         const {review, reviewOutOfTen} = req.body;
+//         const updatedReviewInfo:reviewType = await reviewServices.updateReview( Id, {review, reviewOutOfTen});
+//         res.status(HTTP_STATUS.OK).json(
+//             successReply(updatedReviewInfo, "Review info updated successfully")
+//         );
+//     } catch (error: unknown) {
+//         const errorMessage = error instanceof Error ? error.message : String(error);
+//             console.error(errorMessage);
+//         res.status(HTTP_STATUS.BAD_REQUEST).json(
+//             errorReply("Review info couldnt be updated")
+//         );
+//     }
+// }
 
 export const deleteReview = async (
     req: Request,
