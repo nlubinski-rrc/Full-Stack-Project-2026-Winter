@@ -1,0 +1,60 @@
+{
+    "name": "debug-demo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "docker:up": "docker compose up -d",
+        "docker:down": "docker compose down",
+        "test": "npm run docker:up && npx prisma migrate deploy && jest -i",
+        "start": "tsx src/server.ts",
+        "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
+        "postinstall": "prisma generate",
+        "vercel-build": "prisma migrate deploy && prisma db seed && npm run build",
+        "build": "tsc"
+    },
+    "prisma": {
+        "seed": "ts-node --transpile-only prisma/seed.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "This API is made a review system that makes reviews of courses sections of courses",
+    "dependencies": {
+        "@prisma/client": "^7.5.0",
+        "@types/pg": "^8.11.11",
+        "cors": "^2.8.6",
+        "express": "^5.1.0",
+        "firebase-admin": "^13.6.0",
+        "helmet": "^8.1.0",
+        "joi": "^18.1.1",
+        "morgan": "^1.10.1",
+        "nodemailer": "^7.0.10",
+        "pg": "^8.20.0",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1"
+    },
+    "devDependencies": {
+        "@prisma/adapter-pg": "^7.5.0",
+        "@redocly/cli": "^2.12.0",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.2",
+        "@types/jest": "^29.5.14",
+        "@types/joi": "^17.2.2",
+        "@types/morgan": "^1.9.10",
+        "@types/node": "^22.19.15",
+        "@types/supertest": "^7.2.0",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.8",
+        "dotenv": "^17.3.1",
+        "jest": "^30.0.0",
+        "jest-mock-extended": "^4.0.0",
+        "prisma": "^7.5.0",
+        "supertest": "^7.2.2",
+        "trusted-types": "^2.0.0",
+        "ts-jest": "^29.2.5",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3"
+    }
+}
