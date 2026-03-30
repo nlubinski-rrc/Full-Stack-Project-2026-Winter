@@ -1,51 +1,84 @@
 import type { Actor } from "../types/actor";
-import { actorData } from "./actorData";
 
-export function fetchActors(): Actor[] {
-    return actorData;
+const BASE_URL = "http://localhost:3000/api/v1/actors";
+
+type BackendActor = {
+    id: number;
+    name: string;
+    isFavourite: boolean;
+};
+
+type ApiResponse<T> = {
+    data: T;
+    message: string;
+};
+
+function mapBackendActor(actor: BackendActor): Actor {
+    return {
+        id: actor.id,
+        name: actor.name,
+        isFavorite: actor.isFavourite,
+    };
 }
 
-export function getActorById(actorId: number): Actor {
-    const foundActor = actorData.find(a => a.id === actorId);
+export async function fetchActors(): Promise<Actor[]> {
+    const res = await fetch(BASE_URL);
 
-    if (!foundActor) {
-        throw new Error(`Failed to fetch actor with ${actorId}`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch actors");
     }
 
-    return foundActor;
+    const json: ApiResponse<BackendActor[]> = await res.json();
+    return json.data.map(mapBackendActor);
 }
 
-export function updateActor(actor: Actor) {
-    const foundActorIndex = actorData.findIndex(a => a.id === actor.id);
+export async function getActorById(actorId: number): Promise<Actor> {
+    const res = await fetch(`${BASE_URL}/${actorId}`);
 
-    if (foundActorIndex === -1) {
-        throw new Error(`Failed to update actor with ${actor.id}`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch actor");
     }
 
-    actorData[foundActorIndex] = actor;
-    return actorData[foundActorIndex];
+    const json: ApiResponse<BackendActor> = await res.json();
+    return mapBackendActor(json.data);
 }
 
-export function addFavouriteActor(actorId: number) {
-    const foundActor = actorData.find(a => a.id === actorId);
+export async function addFavouriteActor(actorId: number): Promise<void> {
+    const actor = await getActorById(actorId);
 
-    if (!foundActor) {
-        throw new Error(`Failed to fetch actor with ${actorId}`);
-    } else {
-        foundActor.isFavorite = true;
+    const res = await fetch(`${BASE_URL}/${actorId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            id: actor.id,
+            name: actor.name,
+            isFavourite: true,
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to favourite actor");
     }
-
-    return foundActor;
 }
 
-export function deleteFavouriteActor(actorId: number) {
-    const foundActor = actorData.find(a => a.id === actorId);
+export async function deleteFavouriteActor(actorId: number): Promise<void> {
+    const actor = await getActorById(actorId);
 
-    if (!foundActor) {
-        throw new Error(`Failed to fetch term with ${actorId}`);
-    } else {
-        foundActor.isFavorite = false;
+    const res = await fetch(`${BASE_URL}/${actorId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            id: actor.id,
+            name: actor.name,
+            isFavourite: false,
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to unfavourite actor");
     }
-
-    return foundActor;
 }
