@@ -93,3 +93,25 @@ Request Body
 ```
 
 ---
+
+## Movies
+
+### **GET /titles/:title**
+    - Gets a movie by title
+
+Url Parameters:
+| Parameter        | Type   | Description      |
+|------------------|--------|----------------- |
+| title            | string | Title of the movie |
+
+
+### **GET /:id**
+    - Gets a movie by title
+
+Url Parameters:
+| Parameter        | Type   | Description      |
+|------------------|--------|----------------- |
+| id               | number | Id of the movie  |
+
+### **GET /**
+    - Gets all movies
