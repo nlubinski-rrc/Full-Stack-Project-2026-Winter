@@ -10,15 +10,15 @@ router.post("/",
 
 router.get("/", reviewController.getAllReviews);
 
-// router.get("/:Id",
-//     validateRequest(reviewSchemas.findReview),
-//     reviewController.getReviewByReviewId);
+router.get("/:Id",
+    validateRequest(reviewSchemas.findReview),
+    reviewController.getReviewByReviewId);
 
 router.delete("/:Id",
     validateRequest(reviewSchemas.deleteReview),
     reviewController.deleteReview);
 
-// router.put("/:Id",
-//     validateRequest(reviewSchemas.updateReview),
-//     reviewController.updateReview);
+router.put("/:Id",
+    validateRequest(reviewSchemas.updateReview),
+    reviewController.updateReview);
 export default router;
