@@ -35,11 +35,7 @@ export const getMovieByTitle = async(title: string): Promise<Movie | null> => {
                 title: title
             }
         })
-        if (!movie) {
-            return null
-        } else {
-            return movie
-        }
+        return movie;
     } catch (err: any) {
         throw new Error(`Failed to get movie with title ${title}`)
     }

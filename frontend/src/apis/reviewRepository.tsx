@@ -1,42 +1,41 @@
 import type { reviewType } from "../types/reviewType";
+import reviewData from "../testData/reviewData";
 
-const BASE_URL = "http://localhost:5000";
-const REVIEWS_ENDPOINT = "/api/v1/reviews";
-
-type ApiResponse<T> = {
-    status: string;
-    data?: T;
-    message?: string;
-    error?: string;
-    code?: string;
+export function fetchReviews(): reviewType[] {
+    return [...reviewData];
 };
 
-export async function fetchReviews(): Promise<reviewType[]> {
-    const res = await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}`);
-    const json: ApiResponse<reviewType[]> = await res.json();
-    return json.data ?? [];
-}
 
-export async function createReviewRepository(
-    review: Omit<reviewType, "Id">
-): Promise<reviewType> {
-    const res = await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(review),
-    });
-
-    const json: ApiResponse<reviewType> = await res.json();
-    if (!json.data) {
-        throw new Error("Failed to create review");
+export async function getReviewByReviewId(reviewId: string): Promise<reviewType> {
+    const foundReview = reviewData.find(review => review.Id === reviewId);
+    if(!foundReview) {
+        throw new Error(`Failed to fetch term with ${reviewId}`);
     }
-    return json.data;
-}
+
+    return foundReview;
+};
+
+export async function updateReview(review: reviewType) {
+    const foundReview = reviewData.findIndex(review => review.Id === review.Id);
+    if(foundReview === -1) {
+        throw new Error(`Failed to update term with ${review.Id}`);
+    }
+
+    reviewData[foundReview] = review;
+    return reviewData[foundReview];
+};
 
 export async function deleteReview(reviewId: string) {
-    await fetch(`${BASE_URL}${REVIEWS_ENDPOINT}/${reviewId}`, {
-        method: "DELETE",
-    });
-}
+    const indexToDelete = reviewData.findIndex(review => review.Id === reviewId);
+
+    if (indexToDelete === -1) {
+        throw new Error(`Failed to fetch id ${reviewId}`);
+    }
+    const removed = reviewData.splice(indexToDelete, 1)[0];
+    return removed;
+};
+
+export async function createReviewRepository(review: reviewType) {
+    reviewData.push(review);
+    return review;
+};

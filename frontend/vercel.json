@@ -1,5 +1,6 @@
 {
-    "relatedProjects": ["<back-end-project-ID>"],
+    "relatedProjects": ["prj_tag6UlYUcZGEWQmHXNNecvm1M6A8"],
+    
     "git": {
         "deploymentEnabled": {
             "*": false,
