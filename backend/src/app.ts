@@ -13,7 +13,7 @@ import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/lo
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import actorRoutes from "./api/v1/routes/actorRoutes";
+import reviewRoutes from "./api/v1/routes/reviewRoutes";
 
 const app:Express = express();
 
@@ -34,6 +34,7 @@ app.use(cors(getCorsConfig()));
 app.use(morgan("combined"));
 app.use(express.json());
 
+
 app.get("/api/v1/health", (req, res) => {
     const healthData: HealthCheckResponse = {
         status: "OK",
@@ -44,6 +45,7 @@ app.get("/api/v1/health", (req, res) => {
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/watchlist", watchlistRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
 
 
 setupSwagger(app);

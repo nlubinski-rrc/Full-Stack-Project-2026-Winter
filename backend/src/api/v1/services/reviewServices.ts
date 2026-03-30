@@ -1,6 +1,5 @@
-import { prisma } from "../../../../prisma/client"
-//import { reviewType } from "../types/reviewType";
-import { Review } from "../../../../generated/prisma/client";
+import { prisma } from "../../../../prisma/client";
+import { reviewType } from "../types/reviewType";
 
 export const createReview = async (reviewData: {
     movieName: string,
@@ -16,38 +15,40 @@ export const createReview = async (reviewData: {
     });
 };
 
-export const getAllReviews = async (): Promise<Review[]> => {
-    return prisma.review.findMany();
+export const getAllReviews = async (): Promise<reviewType[]> => {
+    return await prisma.review.findMany();
 };
 
-// export const getReviewByReviewId = async (Id:number): Promise<reviewType | null> => {
-//     const review = prisma.review.findUnique({
-//         where: {
-//             Id: Id,
-//         }})
-//     console.log(review)
-//     if(!review) {
-//         return null;
-//     } else{
-//         return review;
-//     }
-// };
+export const getReviewByReviewId = async (Id: number): Promise<reviewType | null> => {
+    const review = await prisma.review.findUnique({
+        where: {
+            Id: Id,
+        }
+    });
 
-// export const updateReview = async (
-//     Id: number,
-//     reviewData: { review: string; reviewOutOfTen: number;}
-// ): Promise<reviewType> => {
-//     const updatedReview: reviewType = await prisma.review.update({
-//         where: {
-//             Id: Id,
-//         },
-//         data: {
-//             review: reviewData.review,
-//             reviewOutOfTen: reviewData.reviewOutOfTen,
-//         },
-//     });
-//     return updatedReview;
-// };
+    if (!review) {
+        return null;
+    }
+
+    return review;
+};
+
+export const updateReview = async (
+    Id: number,
+    reviewData: { review: string; reviewOutOfTen: number; }
+): Promise<reviewType> => {
+    const updatedReview: reviewType = await prisma.review.update({
+        where: {
+            Id: Id,
+        },
+        data: {
+            review: reviewData.review,
+            reviewOutOfTen: reviewData.reviewOutOfTen,
+        },
+    });
+
+    return updatedReview;
+};
 
 export const deleteReview = async (Id: number): Promise<void> => {
     await prisma.review.delete({
