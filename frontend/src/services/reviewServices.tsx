@@ -1,11 +1,11 @@
 import * as reviewRepository from "../apis/reviewRepository";
 import type { reviewType } from "../types/reviewType";
 
-export function fetchReviews() {
+export async function fetchReviews() {
     return reviewRepository.fetchReviews();
 }
 
-export async function addReview(review: reviewType) {
+export async function addReview(review: Omit<reviewType, "Id">) {
     return reviewRepository.createReviewRepository(review);
 }
 

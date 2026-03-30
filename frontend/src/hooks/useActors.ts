@@ -7,14 +7,13 @@ export function useActors(
     filterFn?: ((actor: Actor) => boolean) | null
 ) {
     const [actors, updateActors] = useState<Actor[]>([]);
-    const [error, setError] = useState<string | null>();
+    const [error, setError] = useState<string | null>(null);
     const [refreshKey, setRefreshKey] = useState<number>(0);
 
     async function toggleFavouriteActor(actorId: number) {
         try {
+            setError(null);
             await ActorService.toggleFavouriteActor(actorId);
-
-            // re-fetch terms to update our state once the operation is finished
             setRefreshKey(key => key + 1);
         } catch (errorObject) {
             setError(`${errorObject}`);
@@ -22,28 +21,32 @@ export function useActors(
     }
 
     useEffect(() => {
-        let ignore: boolean = false;
+        let ignore = false;
 
         async function fetchActors() {
-        try {
-            let result = await ActorService.fetchActors();
+            try {
+                setError(null);
+                let result = await ActorService.fetchActors();
 
-            if (!ignore) {
-                if (filterFn) {
+                if (!ignore && filterFn) {
                     result = result.filter(filterFn);
                 }
-            }
-            updateActors([...result]);
-        } catch (errorObject) {
-            setError(`${errorObject}`);
+
+                if (!ignore) {
+                    updateActors([...result]);
+                }
+            } catch (errorObject) {
+                if (!ignore) {
+                    setError(`${errorObject}`);
+                }
             }
         }
-        
+
         fetchActors();
-        
+
         return () => {
             ignore = true;
-        }
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [...dependencies, refreshKey, filterFn]);
 
@@ -51,5 +54,5 @@ export function useActors(
         actors,
         error,
         toggleFavouriteActor
-    }
+    };
 }
