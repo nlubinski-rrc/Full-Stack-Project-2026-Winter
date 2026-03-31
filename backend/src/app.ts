@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
+import { clerkMiddleware } from '@clerk/express'
 import watchlistRoutes from "./api/v1/routes/watchlistRoutes";
 import movieRoutes from "./api/v1/routes/movieRoutes";
 import { getHelmetConfig } from "../config/helmetConfig";
@@ -28,6 +29,7 @@ app.use(helmet());
 app.use(helmet(getHelmetConfig()));
 app.use(cors());
 app.use(cors(getCorsConfig()));
+app.use(clerkMiddleware())
 app.use(morgan("combined"));
 app.use(express.json());
 
