@@ -1,26 +1,50 @@
 import type { Movie } from "../types/movie";
-import { movies } from "./mockMovieData"
 
-export function fetchMovies(): Movie[] {
-    return movies
+const BASE_URL = "http://localhost:3000";
+const MOVIES_ENDPOINT = "/api/v1/movies";
+
+type BackendMovie = {
+    id: number;
+    title: string;
+    overview: string;
+    averageRating: number;
+    releaseDate: string;
+};
+
+type ApiResponse<T> = {
+    data: T;
+    message: string;
+};
+
+function mapBackendMovie(movie: BackendMovie): Movie {
+    return {
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        averageRating: movie.averageRating,
+        releaseDate: movie.releaseDate,
+    };
 }
 
-export function getMovieById(movieId: number): Movie {
-    const searchedMovie = movies.find(m => m.Id === movieId)
-
-    if (!searchedMovie) {
-        throw new Error(`Could not find movie Id ${movieId}`)
+export async function fetchMovies(): Promise<Movie[]> {
+    const res = await fetch(`${BASE_URL}${MOVIES_ENDPOINT}`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch movies");
     }
 
-    return searchedMovie
+    const json: ApiResponse<Movie[]> = await res.json();
+    console.log(json);
+    return json.data.map(mapBackendMovie);
 }
 
-export function getMovieByTitle(movieTitle: string): Movie {
-    const searchedMovie = movies.find(m => m.title === movieTitle)
+// Unused right now, Keeping in case it is needed for future fetches
+export async function getMovieById(movieId: number): Promise<Movie> {
+    const res = await fetch(`${BASE_URL}${MOVIES_ENDPOINT}/${movieId}`);
 
-    if (!searchedMovie) {
-        throw new Error(`Could not find movie title ${movieTitle}`)
+    if (!res.ok) {
+        throw new Error(`Could not find movie Id ${movieId}`);
     }
 
-    return searchedMovie
+    const movie: ApiResponse<Movie> = await res.json();
+    return mapBackendMovie(movie.data);
 }

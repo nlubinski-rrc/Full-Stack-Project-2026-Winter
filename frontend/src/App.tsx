@@ -10,11 +10,8 @@ import FavoriteActorsPage from "./components/pages/favorite-actors/FavoriteActor
 import WatchedMovies from "./components/common/watched-movies/watchedmovies.tsx";
 import { Routes, Route } from "react-router-dom";
 import { CreateReview } from "./components/pages/createReview/createReview.tsx";
-import { useState } from "react";
-import type { Watchlist } from "./types/watchlistType.ts";
 
 function App() {
-    const [userWatchlist, setWatchlist] = useState<Watchlist>({ watchlistItems: [] });
     return (
         <>
             <Nav></Nav>
@@ -36,7 +33,7 @@ function App() {
                     path="/create-reviews"
                     element={
                         <>
-                            <CreateReview watchlist={userWatchlist} setWatchlist={setWatchlist} />
+                            <CreateReview />
                         </>
                     }
                 />
@@ -44,19 +41,11 @@ function App() {
                     path="/my-watchlist"
                     element={
                         <>
-                            <WatchlistPage watchlist={userWatchlist} setWatchlist={setWatchlist} />
+                            <WatchlistPage />
                         </>
                     }
                 />
-                <Route
-                    path="/favorite-actors"
-                    element={
-                        <FavoriteActorsPage
-                            userWatchlist={userWatchlist}
-                            setWatchlist={setWatchlist}
-                        />
-                    }
-                />
+                <Route path="/favorite-actors" element={<FavoriteActorsPage />} />
                 <Route path="/watched-movies" element={<WatchedMovies />} />
             </Routes>
         </>
