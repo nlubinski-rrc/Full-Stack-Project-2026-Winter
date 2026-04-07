@@ -3,7 +3,7 @@ import "./createReview.css";
 import MovieCard from "../../common/movieCard/movieCard";
 import { useReviews } from "../../../hooks/useReviews";
 import { useWatchlist } from "../../../hooks/useWatchlist";
-import { useMovies } from "../../../hooks/movieHook";
+import { useMovies } from "../../../hooks/useMovies";
 
 export function CreateReview() {
     const { watchlist, removeFromWatchlist } = useWatchlist([]);

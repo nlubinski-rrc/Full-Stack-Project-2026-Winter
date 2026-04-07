@@ -1,6 +1,6 @@
 import "./movieGrid.css";
 import MovieCard from "../movieCard/movieCard";
-import { useMovies } from "../../../hooks/movieHook";
+import { useMovies } from "../../../hooks/useMovies";
 
 function MovieGrid() {
     const { movies, err } = useMovies([]);

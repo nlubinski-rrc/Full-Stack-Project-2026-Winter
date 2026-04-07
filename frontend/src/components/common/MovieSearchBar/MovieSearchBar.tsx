@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
-import { useMovies } from "../../../hooks/movieHook";
+import { useMovies } from "../../../hooks/useMovies";
 
 function MovieSearchBar({
     addToWatchlist,
