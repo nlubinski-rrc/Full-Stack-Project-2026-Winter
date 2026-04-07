@@ -10,11 +10,11 @@ function FavoriteActorsPage() {
 
     const watchListItems: JSX.Element[] = watchlist.map((movie) => {
         return (
-            <li id="watchListItem" key={movie.Id}>
+            <li id="watchListItem" key={movie.id}>
                 {movie.title}
                 <button
                     onClick={() => {
-                        removeFromWatchlist(movie.Id);
+                        removeFromWatchlist(movie.id);
                     }}
                 >
                     Remove

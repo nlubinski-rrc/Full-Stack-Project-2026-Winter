@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./createReview.css";
 import MovieCard from "../../common/movieCard/movieCard";
-import movieData from "../../../../testMovieData.json";
 import { useReviews } from "../../../hooks/useReviews";
 import { useWatchlist } from "../../../hooks/useWatchlist";
+import { useMovies } from "../../../hooks/movieHook";
 
 export function CreateReview() {
     const { watchlist, removeFromWatchlist } = useWatchlist([]);
+    const { movies } = useMovies([]);
     const [text, textSave] = useState("");
     const [error, setError] = useState("");
     const [selectedMovieId, setSelectedMovieId] = useState<string>("");
@@ -14,8 +15,8 @@ export function CreateReview() {
 
     const { reviewsList, addReview, deleteReview } = useReviews();
 
-    const availableMovies = movieData.results.filter((movie) =>
-        watchlist.some((item) => item.Id === movie.id)
+    const availableMovies = movies.filter((movie) =>
+        watchlist.some((item) => item.id === movie.id)
     );
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -25,12 +26,12 @@ export function CreateReview() {
         }
     }
 
-    const movieIds = watchlist.map((movie) => movie.Id);
+    const movieIds = watchlist.map((movie) => movie.id);
 
-    const movieList = movieData["results"].map((movie) => {
+    const movieList = movies.map((movie) => {
         if (movieIds.includes(movie.id)) {
             return (
-                <MovieCard key={movie.id} movie={[movie.title, movie.vote_average.toString()]} />
+                <MovieCard key={movie.id} movie={[movie.title, movie.averageRating.toString()]} />
             );
         }
     });
@@ -57,7 +58,7 @@ export function CreateReview() {
     }
 
     function checkMovieList() {
-        const watchlistCheck = watchlist.filter((movie) => movie.Id === parseInt(selectedMovieId));
+        const watchlistCheck = watchlist.filter((movie) => movie.id === parseInt(selectedMovieId));
         if (watchlistCheck) {
             removeFromWatchlist(parseInt(selectedMovieId));
         }
@@ -77,7 +78,7 @@ export function CreateReview() {
                     <option value="">Select a movie</option>
 
                     {availableMovies.map((movie) => (
-                        <option key={movie.title} value={movie.title}>
+                        <option key={movie.id} value={movie.id}>
                             {movie.title}
                         </option>
                     ))}
