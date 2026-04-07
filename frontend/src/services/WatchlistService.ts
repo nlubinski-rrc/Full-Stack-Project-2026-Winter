@@ -1,15 +1,16 @@
-import { WatchlistRepository } from '../apis/WatchlistRepository';
+import * as WatchlistRepo from "../apis/watchlistRepo";
 
-type WatchlistItem = {
-  movieId: number;
-  movieTitle: string;
-};
+export async function fetchWatchlist(sessionToken?: string | null) {
+    const watchlist = await WatchlistRepo.fetchWatchlist(sessionToken);
+    return watchlist;
+}
 
-export class WatchlistService {
-  constructor(private repo = new WatchlistRepository()) {}
+export async function addToWatchlist(movieId: number, sessionToken?: string | null) {
+    const response = await WatchlistRepo.addToWatchlist(movieId, sessionToken);
+    return response;
+}
 
-  async searchWatchlist(query: string): Promise<WatchlistItem[]> {
-    if (!query.trim()) return [];
-    return this.repo.search(query);
-  }
+export async function removeFromWatchlist(movieId: number, sessionToken?: string | null) {
+    const response = await WatchlistRepo.removeFromWatchlist(movieId, sessionToken);
+    return response;
 }

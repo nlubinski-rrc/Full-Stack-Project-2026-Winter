@@ -1,16 +1,12 @@
 import { useState } from "react";
 import "./createReview.css";
-import type { Watchlist } from "../../../types/watchlistType";
 import MovieCard from "../../common/movieCard/movieCard";
 import movieData from "../../../../testMovieData.json";
 import { useReviews } from "../../../hooks/useReviews";
+import { useWatchlist } from "../../../hooks/useWatchlist";
 
-type CreateReviewProps = {
-    watchlist: Watchlist;
-    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
-};
-
-export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
+export function CreateReview() {
+    const { watchlist, removeFromWatchlist } = useWatchlist([]);
     const [text, textSave] = useState("");
     const [error, setError] = useState("");
     const [selectedMovieId, setSelectedMovieId] = useState<string>("");
@@ -18,8 +14,8 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
 
     const { reviewsList, addReview, deleteReview } = useReviews();
 
-    const availableMovies = movieData.results.filter(movie =>
-        watchlist.watchlistItems.some(item => item.movieId === movie.id)
+    const availableMovies = movieData.results.filter((movie) =>
+        watchlist.some((item) => item.Id === movie.id)
     );
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -29,15 +25,12 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
         }
     }
 
-    const movieIds = watchlist.watchlistItems.map((movie) => movie.movieId);
+    const movieIds = watchlist.map((movie) => movie.Id);
 
     const movieList = movieData["results"].map((movie) => {
         if (movieIds.includes(movie.id)) {
             return (
-                <MovieCard
-                    key={movie.id}
-                    movie={[movie.title, movie.vote_average.toString()]}
-                />
+                <MovieCard key={movie.id} movie={[movie.title, movie.vote_average.toString()]} />
             );
         }
     });
@@ -53,11 +46,10 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
             return false;
         }
 
-        
         const newReview = {
             movieName: selectedMovieId,
             review: text,
-            reviewOutOfTen: reviewOutOfTen
+            reviewOutOfTen: reviewOutOfTen,
         };
 
         addReview(newReview);
@@ -65,12 +57,10 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
     }
 
     function checkMovieList() {
-        setWatchlist(prev => ({
-            ...prev,
-            watchlistItems: prev.watchlistItems.filter(movie =>
-                !selectedMovieId.includes(movie.movieTitle)
-            )
-        }));
+        const watchlistCheck = watchlist.filter((movie) => movie.Id === parseInt(selectedMovieId));
+        if (watchlistCheck) {
+            removeFromWatchlist(parseInt(selectedMovieId));
+        }
     }
 
     return (
@@ -81,12 +71,12 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 <select
                     id="DropDownForMovies"
                     value={selectedMovieId}
-                    onChange={e => setSelectedMovieId(e.target.value)}
+                    onChange={(e) => setSelectedMovieId(e.target.value)}
                 >
                     {}
                     <option value="">Select a movie</option>
 
-                    {availableMovies.map(movie => (
+                    {availableMovies.map((movie) => (
                         <option key={movie.title} value={movie.title}>
                             {movie.title}
                         </option>
@@ -98,7 +88,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 <select
                     id="DropDownRatingOfTen"
                     value={Number(reviewOutOfTen)}
-                    onChange={e => setReviewOutOfTen(Number(e.target.value))}
+                    onChange={(e) => setReviewOutOfTen(Number(e.target.value))}
                 >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -118,12 +108,18 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                     id="createTheReview"
                     value={text}
                     onChange={handleChange}
-                    style={{ width: '300px', height: '50px' }}
+                    style={{ width: "300px", height: "50px" }}
                 >
                     --Review message--
                 </textarea>
 
-                <button onClick={() => { if (saveText()) { checkMovieList(); } }}>
+                <button
+                    onClick={() => {
+                        if (saveText()) {
+                            checkMovieList();
+                        }
+                    }}
+                >
                     Submit review
                 </button>
 
@@ -135,7 +131,7 @@ export function CreateReview({ watchlist, setWatchlist }: CreateReviewProps) {
                 <h2>Recent reviews:</h2>
 
                 <ol>
-                    {reviewsList.map(review => (
+                    {reviewsList.map((review) => (
                         <li key={review.Id}>
                             {review.movieName} - {review.reviewOutOfTen}/10 - {review.review}
                             <button onClick={() => review.Id && deleteReview(review.Id)}>

@@ -3,7 +3,7 @@ import * as MovieService from "../services/movieService";
 import type { Movie } from "../types/movie";
 
 /**
- * useMovies is a custom hook that is used whenever access to the movies database 
+ * useMovies is a custom hook that is used whenever access to the movies database
  * is needed. It is also used for searching movies using the filterFn parameter.
  * @param dependencies: Any variables that, when changed, should re-query
  * our list of movies by getting all movies from our service
