@@ -2,11 +2,13 @@ import { useState } from "react";
 import "./MovieSearchBar.css";
 import MovieCard from "../movieCard/movieCard";
 import { useMovies } from "../../../hooks/movieHook";
-import { useWatchlist } from "../../../hooks/useWatchlist";
 
-function MovieSearchBar() {
+function MovieSearchBar({
+    addToWatchlist,
+}: {
+    addToWatchlist: (movieId: number) => Promise<void>;
+}) {
     const { movies } = useMovies([]);
-    const { addToWatchlist } = useWatchlist([]);
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredMovies =
@@ -47,7 +49,6 @@ function MovieSearchBar() {
                             type="button"
                             className="add-to-watchlist-button"
                             onClick={() => {
-                                console.log(movie.id);
                                 addToWatchlist(movie.id);
                             }}
                         >

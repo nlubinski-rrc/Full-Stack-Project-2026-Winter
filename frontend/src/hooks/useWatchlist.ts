@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import * as WatchlistService from "../services/WatchlistService";
 import type { Movie } from "../types/movie";
 import { useAuth } from "@clerk/clerk-react";
-import { useMovies } from "./movieHook";
 
 /**
  * useMovies is a custom hook that is used whenever access to the movies database
@@ -36,20 +35,17 @@ export function useWatchlist(dependencies: unknown[]) {
 
     const addToWatchlist = async (movieId: number) => {
         try {
-            const watchlistCheck = watchlist.filter((movie) => movie.id == movieId);
-            if (watchlistCheck.length > 0) {
+            if (watchlist.some((m) => Number(m.id) === Number(movieId))) {
                 alert("Movie already in watchlist");
                 return;
             }
-            let sessionToken = isSignedIn ? await getToken() : null;
-            const response = await WatchlistService.addToWatchlist(movieId, sessionToken);
 
-            if (!response) {
-                throw new Error("Error adding to watchlist");
-            }
+            const sessionToken = isSignedIn ? await getToken() : null;
+            await WatchlistService.addToWatchlist(movieId, sessionToken);
+
             setRefreshKey((key) => key + 1);
         } catch (err: any) {
-            setErr(err);
+            setErr(err.message);
         }
     };
 
@@ -60,10 +56,22 @@ export function useWatchlist(dependencies: unknown[]) {
             try {
                 let sessionToken = isSignedIn ? await getToken() : null;
                 let result = await WatchlistService.fetchWatchlist(sessionToken);
-
-                if (!ignore) {
-                    updateWatchlist([...result]);
+                const formattedMovies: Movie[] = [];
+                for (const item of result) {
+                    if (item.movie) {
+                        formattedMovies.push({
+                            id: item.movie.id,
+                            title: item.movie.title,
+                            overview: item.movie.overview,
+                            averageRating: item.movie.averageRating,
+                            releaseDate: item.movie.releaseDate,
+                        });
+                    }
                 }
+                if (!ignore) {
+                    updateWatchlist([...formattedMovies]);
+                }
+                console.log(watchlist);
             } catch (errorObject) {
                 setErr(`${errorObject}`);
             }

@@ -2,12 +2,21 @@ import "./watchlist.css";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 import MovieCard from "../../common/movieCard/movieCard";
 import { useWatchlist } from "../../../hooks/useWatchlist";
+import { useCallback } from "react";
 
 function WatchlistPage() {
-    const { watchlist, removeFromWatchlist } = useWatchlist([]);
+    const { watchlist, removeFromWatchlist, addToWatchlist } = useWatchlist([]);
     function removeWatchlistItem(movieId: number) {
         removeFromWatchlist(movieId);
     }
+    console.log(watchlist);
+
+    const handleAddToWatchlist = useCallback(
+        (movieId: number) => {
+            return addToWatchlist(movieId);
+        },
+        [addToWatchlist]
+    );
 
     const movieListItems =
         watchlist.length === 0 ? (
@@ -15,7 +24,9 @@ function WatchlistPage() {
         ) : (
             watchlist.map((movie) => (
                 <div key={movie.id}>
-                    <MovieCard movie={[movie.title, "N/A", "No description available"]} />
+                    <MovieCard
+                        movie={[movie.title, movie.averageRating.toString(), movie.overview]}
+                    />
                     <button type="button" onClick={() => removeWatchlistItem(movie.id)}>
                         Remove
                     </button>
@@ -27,7 +38,7 @@ function WatchlistPage() {
         <div id="watchlist-page">
             <h1 id="title-header">My Watchlist</h1>
             <div id="search-and-watchlist">
-                <MovieSearchBar />
+                <MovieSearchBar addToWatchlist={handleAddToWatchlist} />
                 <div id="movies">{movieListItems}</div>
             </div>
         </div>

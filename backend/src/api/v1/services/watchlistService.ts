@@ -31,7 +31,7 @@ export const addToWatchlist = async (movieId: number, userId: string) => {
         });
 
         if (!watchlistItem) return null;
-
+        console.log(watchlistItem);
         return watchlistItem;
     } catch (err: any) {
         return null;

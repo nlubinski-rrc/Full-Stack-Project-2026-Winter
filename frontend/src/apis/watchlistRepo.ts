@@ -1,38 +1,7 @@
-import type { Movie } from "../types/movie";
-
 const BASE_URL = "http://localhost:3000";
 const WATCHLIST_ENDPOINT = "/api/v1/watchlist";
 
-type BackendMovie = {
-    id: number;
-    title: string;
-    overview: string;
-    averageRating: number;
-    releaseDate: string;
-};
-
-type WatchlistItem = {
-    movieId: number;
-    userId: string;
-    movie: BackendMovie;
-};
-
-type ApiResponse<T> = {
-    data: T;
-    message: string;
-};
-
-function mapBackendMovie(movie: BackendMovie): Movie {
-    return {
-        id: movie.id,
-        title: movie.title,
-        overview: movie.overview,
-        averageRating: movie.averageRating,
-        releaseDate: movie.releaseDate,
-    };
-}
-
-export async function fetchWatchlist(sessionToken?: string | null): Promise<Movie[]> {
+export async function fetchWatchlist(sessionToken?: string | null): Promise<any> {
     const res = await fetch(`${BASE_URL}${WATCHLIST_ENDPOINT}`, {
         method: "GET",
         headers: {
@@ -45,14 +14,15 @@ export async function fetchWatchlist(sessionToken?: string | null): Promise<Movi
         throw new Error("Failed to fetch watchlist");
     }
 
-    const json: ApiResponse<WatchlistItem[]> = await res.json();
-    return json.data.map((item) => mapBackendMovie(item.movie));
+    const json = await res.json();
+    console.log(json.data);
+    return json.data;
 }
 
 export async function addToWatchlist(
     movieId: number,
     sessionToken?: string | null
-): Promise<Movie> {
+): Promise<boolean> {
     const res = await fetch(`${BASE_URL}${WATCHLIST_ENDPOINT}/${movieId}`, {
         method: "POST",
         headers: {
@@ -62,17 +32,17 @@ export async function addToWatchlist(
     });
 
     if (!res.ok) {
+        console.log("HERE");
         throw new Error(`Could not find movie Id ${movieId}`);
     }
 
-    const movie: ApiResponse<Movie> = await res.json();
-    return mapBackendMovie(movie.data);
+    return true;
 }
 
 export async function removeFromWatchlist(
     movieId: number,
     sessionToken?: string | null
-): Promise<Movie> {
+): Promise<boolean> {
     const res = await fetch(`${BASE_URL}${WATCHLIST_ENDPOINT}/${movieId}`, {
         method: "DELETE",
         headers: {
@@ -85,6 +55,5 @@ export async function removeFromWatchlist(
         throw new Error(`Could not find movie Id ${movieId}`);
     }
 
-    const movie: ApiResponse<Movie> = await res.json();
-    return mapBackendMovie(movie.data);
+    return true;
 }
