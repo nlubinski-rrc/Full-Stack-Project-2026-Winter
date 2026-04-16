@@ -1,8 +1,9 @@
+/*
 import type { Movie } from "../types/movie";
 
 export const movies: Movie[] = [
     {
-      Id: 640146,
+      id: 640146,
       title: "Ant-Man and the Wasp: Quantumania",
       overview: "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope's parents Janet van Dyne and Hank Pym, and Scott's daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.",
       genreIds: [28, 12, 878],
@@ -162,3 +163,4 @@ export const movies: Movie[] = [
       releaseDate: "2022-09-30"
     }
   ];
+*/
