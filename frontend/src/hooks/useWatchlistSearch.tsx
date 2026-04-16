@@ -1,5 +1,6 @@
+/*
 import { useState } from 'react';
-import { WatchlistService } from '../services/WatchlistService';
+import * as WatchlistService from '../services/WatchlistService';
 
 type WatchlistItem = {
   movieId: number;
@@ -11,7 +12,7 @@ export function useWatchlistSearch() {
   const [results, setResults] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const service = new WatchlistService();
+  const service = WatchlistService.fetchWatchlist();
 
   const search = async (query: string) => {
     setLoading(true);
@@ -22,3 +23,5 @@ export function useWatchlistSearch() {
 
   return { searchTerm, setSearchTerm, results, search, loading };
 }
+
+*/
