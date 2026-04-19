@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as actorServices from "../services/actorServices";
 import { successResponse, errorResponse } from "../../../models/responseModel";
-import { Actor } from "../../../models/actorModel";
+// import { Actor } from "../../../models/actorModel";
+import { Actor } from "../../../../generated/prisma/client";
 
 export const getAllActors = async (
     req: Request,
@@ -59,23 +60,25 @@ export const getActorById = async (
 //     }
 // };
 
-export const updateActor = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-        const actorId = parseInt(idParam, 10);
+// FAVOURITE ACTORS NOW HANDLED BY UserActor
+// 
+// export const updateActor = async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+// ): Promise<void> => {
+//     try {
+//         const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+//         const actorId = parseInt(idParam, 10);
 
-        const updatedActor: Actor = await actorServices.updateActor(actorId, req.body);
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(updatedActor, "Actor updated successfully")
-        );
-    } catch (error: unknown) {
-        next(error);
-    }
-};
+//         const updatedActor: Actor = await actorServices.updateActor(actorId, req.body);
+//         res.status(HTTP_STATUS.OK).json(
+//             successResponse(updatedActor, "Actor updated successfully")
+//         );
+//     } catch (error: unknown) {
+//         next(error);
+//     }
+// };
 
 // export const deleteActor = async (
 //     req: Request,

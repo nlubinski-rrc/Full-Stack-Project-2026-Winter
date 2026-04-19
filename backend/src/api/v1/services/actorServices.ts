@@ -23,18 +23,20 @@ export const getActorById = async(id: number): Promise<Actor | null> => {
     }
 }
 
-export const updateActor = async(
-    id: number,
-    actorData: {isFavourite: boolean}
-): Promise<Actor> => {
-    const updateActor = await prisma.actor.update({
-        where: {
-            id: id
-        },
-        data: {
-            ...actorData
-        }
-    });
+// FAVOURITE ACTORS NOW HANDLED BY UserActor
+//
+// export const updateActor = async(
+//     id: number,
+//     actorData: {isFavourite: boolean}
+// ): Promise<Actor> => {
+//     const updateActor = await prisma.actor.update({
+//         where: {
+//             id: id
+//         },
+//         data: {
+//             ...actorData
+//         }
+//     });
 
-    return structuredClone(updateActor);
-}
+//     return structuredClone(updateActor);
+// }

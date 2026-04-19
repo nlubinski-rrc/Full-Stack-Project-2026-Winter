@@ -5,15 +5,17 @@ import { requireAuth } from "@clerk/express";
 
 const router: Router = express.Router();
 
+// "/api/v1/actors" prefixes all below routes
+
 router.post(
-    "/actors/:actorId/favourite",
+    "/:actorId/favourite",
     requireAuth(),
     findOrCreateUser,
     userActorController.createUserActor
 );
 
 router.delete(
-    "/actors/:actorId/favourite",
+    "/:actorId/favourite",
     requireAuth(),
     findOrCreateUser,
     userActorController.deleteUserActor

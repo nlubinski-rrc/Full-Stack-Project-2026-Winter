@@ -15,6 +15,7 @@
         "strictPropertyInitialization": true,
         "noImplicitThis": true,
         "alwaysStrict": true,
+        "ignoreDeprecations": "6.0", // ADDED BECAUSE baseUrl WAS SHOWING RED WARNING
         "baseUrl": "./",
         "paths": {
             "*": ["*"]

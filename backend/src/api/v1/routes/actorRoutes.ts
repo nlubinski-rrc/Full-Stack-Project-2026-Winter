@@ -20,10 +20,12 @@ router.get(
 //     actorController.createActor
 // );
 
-router.put(
-    "/:id",
-    actorController.updateActor
-);
+// FAVOURITE ACTORS NOW HANDLED BY UserActor
+//
+// router.put(
+//     "/:id",
+//     actorController.updateActor
+// );
 
 // router.delete(
 //     "/:id",
