@@ -10,7 +10,6 @@ generator client {
 }
 
 datasource db {
-  url = env("DATABASE_URL")
   provider = "postgresql"
 }
 
@@ -44,13 +43,22 @@ model Watchlist {
 model Actor {
   id Int @id @default(autoincrement())
   name String
-  isFavourite Boolean
+  userActors UserActor[]
   actorMovies Movie[]
+}
+
+model UserActor {
+  user User @relation(fields:[userId], references: [id], onDelete: Cascade)
+  actor Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  userId String
+  actorId Int
+  @@id([userId, actorId])
 }
 
 model User {
   id        String @id
   watchlist Watchlist[]
+  userActors UserActor[]
 }
 
 // model ActorMovie {
