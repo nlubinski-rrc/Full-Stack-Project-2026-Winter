@@ -15,7 +15,7 @@ export async function getReviewByReviewId(reviewId: string): Promise<reviewType>
     return foundReview;
 };
 
-export async function updateReview(review: reviewType) {
+export async function updateReview(review: reviewType): Promise<reviewType> {
     const foundReview = reviewData.findIndex(review => review.Id === review.Id);
     if(foundReview === -1) {
         throw new Error(`Failed to update term with ${review.Id}`);
