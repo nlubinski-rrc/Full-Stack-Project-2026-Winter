@@ -37,3 +37,7 @@ p {
         width: 45%;
     }
 }
+
+#watchlist-loading {
+    margin-left: 45%;
+}
