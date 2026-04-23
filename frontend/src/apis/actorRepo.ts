@@ -3,24 +3,28 @@ import type { Actor } from "../types/actor";
 const BASE_URL = "http://localhost:3000";
 const ACTORS_ENDPOINT = "/api/v1/actors";
 
-type BackendActor = {
-    id: number;
-    name: string;
-    isFavourite: boolean;
-};
+// Not needed
+//
+// type BackendActor = {
+//     id: number;
+//     name: string;
+//     isFavourite: boolean;
+// };
 
 type ApiResponse<T> = {
     data: T;
     message: string;
 };
 
-function mapBackendActor(actor: BackendActor): Actor {
-    return {
-        id: actor.id,
-        name: actor.name,
-        isFavorite: actor.isFavourite,
-    };
-}
+// Not needed
+//
+// function mapBackendActor(actor: BackendActor): Actor {
+//     return {
+//         id: actor.id,
+//         name: actor.name,
+//         isFavorite: actor.isFavourite,
+//     };
+// }
 
 export async function fetchActors(sessionToken?: string|null): Promise<Actor[]> {
     const res = await fetch(`${BASE_URL}${ACTORS_ENDPOINT}`,
@@ -35,8 +39,9 @@ export async function fetchActors(sessionToken?: string|null): Promise<Actor[]> 
         throw new Error("Failed to fetch actors");
     }
 
-    const json: ApiResponse<BackendActor[]> = await res.json();
-    return json.data.map(mapBackendActor);
+    const json: ApiResponse<Actor[]> = await res.json();
+    // return json.data.map(mapBackendActor);
+    return json.data;
 }
 
 export async function getActorById(actorId: number, sessionToken?: string|null): Promise<Actor> {
@@ -52,8 +57,8 @@ export async function getActorById(actorId: number, sessionToken?: string|null):
         throw new Error("Failed to fetch actor");
     }
 
-    const json: ApiResponse<BackendActor> = await res.json();
-    return mapBackendActor(json.data);
+    const json: ApiResponse<Actor> = await res.json();
+    return json.data;
 }
 
 // FAVOURITES NOW HANDLED BY actorFavouriteRepo

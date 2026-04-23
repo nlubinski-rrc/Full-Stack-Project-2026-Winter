@@ -10,11 +10,14 @@ export const getAllActors = async(): Promise<ActorWithUsers[]> => {
     });
 }
 
-export const getActorById = async(id: number): Promise<Actor | null> => {
+export const getActorById = async(id: number): Promise<ActorWithUsers | null> => {
     try {
-        const actor: Actor | null = await prisma.actor.findUnique({
+        const actor: ActorWithUsers | null = await prisma.actor.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                userActors: true
             }
         });
 

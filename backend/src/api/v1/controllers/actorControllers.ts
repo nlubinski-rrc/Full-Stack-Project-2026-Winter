@@ -18,14 +18,12 @@ export const getAllActors = async (
 
         const userActors: FrontendActor[] = actors.map(a => {
             const {id, name} = a;
-
             return {
                 id: id,
                 name: name,
                 isFavorite: (userId != null) && a.userActors.some(userActor => userActor.userId === userId)
             }
         }) 
-
         res.status(HTTP_STATUS.OK).json(
             successResponse(userActors, "Actors retrieved successfully")
         );
@@ -43,11 +41,17 @@ export const getActorById = async (
         const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         const actorId = parseInt(idParam, 10);
 
-        const actor: Actor | null = await actorServices.getActorById(actorId);
+        const actor = await actorServices.getActorById(actorId);
 
         if (actor) {
+            const userId = req.userId;
+            const frontendActor: FrontendActor = {
+                id: actor.id,
+                name: actor.name,
+                isFavorite: (userId != null) && actor.userActors.some(userActor => userActor.userId === userId)
+            }
             res.status(HTTP_STATUS.OK).json(
-                successResponse(actor, "Actor retrieved successfully")
+                successResponse(frontendActor, "Actor retrieved successfully")
             );
         } else {
             res.status(HTTP_STATUS.BAD_REQUEST).json(

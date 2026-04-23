@@ -9,7 +9,7 @@ export async function fetchActors(sessionToken?: string|null): Promise<Actor[]> 
 
 export async function toggleFavouriteActor(actorId: number, sessionToken: string): Promise<void> {
     const actor: Actor = await ActorRepo.getActorById(actorId, sessionToken);
-
+    console.log(actor)
     if (actor.isFavorite) {
         await ActorFavouriteRepo.deleteFavouriteActor(
             actor.id,
