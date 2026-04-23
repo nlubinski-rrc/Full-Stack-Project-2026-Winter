@@ -1,8 +1,13 @@
 import { Actor } from "../../../../generated/prisma/client";
 import { prisma } from "../../../../prisma/client"
+import { ActorWithUsers } from "../types/actorWithUsers";
 
-export const getAllActors = async(): Promise<Actor[]> => {
-    return prisma.actor.findMany();
+export const getAllActors = async(): Promise<ActorWithUsers[]> => {
+    return prisma.actor.findMany({
+        include: {
+            userActors: true
+        }
+    });
 }
 
 export const getActorById = async(id: number): Promise<Actor | null> => {
