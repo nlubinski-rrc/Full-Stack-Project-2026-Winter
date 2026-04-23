@@ -6,7 +6,6 @@ import watchlistRoutes from "./api/v1/routes/watchlistRoutes";
 import movieRoutes from "./api/v1/routes/movieRoutes";
 import { getHelmetConfig } from "../config/helmetConfig";
 import { getCorsConfig } from "../config/corsConfig";
-import setupSwagger from "../config/swagger";
 import { accessLogger, errorLogger, consoleLogger } from "./api/v1/middleware/logger";
 import cors from "cors";
 import helmet from "helmet";
@@ -45,5 +44,4 @@ app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/watchlist", watchlistRoutes);
 app.use("/api/v1/actors", actorRoutes);
 
-setupSwagger(app);
 export default app;
