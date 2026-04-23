@@ -5,10 +5,12 @@ import type { Watchlist } from "../../../types/watchlistType";
 import movies from "../jsonMovies";
 
 type SearchBarProps = {
-    addItemToList: React.Dispatch<React.SetStateAction<Watchlist>>;
+    addItemToList?: React.Dispatch<React.SetStateAction<Watchlist>>;
+    onAddMovie?: (movieId: number, movieTitle: string) => void | Promise<void>;
+    isAdding?: boolean;
 };
 
-function MovieSearchBar({ addItemToList }: SearchBarProps) {
+function MovieSearchBar({ addItemToList, onAddMovie, isAdding = false }: SearchBarProps) {
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredMovies =
@@ -18,17 +20,24 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
                   movie.title.toLowerCase().includes(searchTerm.toLowerCase())
               );
 
-    function addToWatchlist(movieId: number, movieTitle: string) {
-        addItemToList((prev) => {
-            if (prev.watchlistItems.some((item) => item.movieId === movieId)) {
-                return prev;
-            }
+    async function addToWatchlist(movieId: number, movieTitle: string) {
+        if (onAddMovie) {
+            await onAddMovie(movieId, movieTitle);
+            return;
+        }
 
-            return {
-                ...prev,
-                watchlistItems: [...prev.watchlistItems, { movieId, movieTitle }],
-            };
-        });
+        if (addItemToList) {
+            addItemToList((prev) => {
+                if (prev.watchlistItems.some((item) => item.movieId === movieId)) {
+                    return prev;
+                }
+
+                return {
+                    ...prev,
+                    watchlistItems: [...prev.watchlistItems, { movieId, movieTitle }],
+                };
+            });
+        }
     }
 
     return (
@@ -63,9 +72,10 @@ function MovieSearchBar({ addItemToList }: SearchBarProps) {
                         <button
                             type="button"
                             className="add-to-watchlist-button"
+                            disabled={isAdding}
                             onClick={() => addToWatchlist(movie.id, movie.title)}
                         >
-                            Add to Watchlist
+                            {isAdding ? "Adding..." : "Add to Watchlist"}
                         </button>
                     </div>
                 ))}
