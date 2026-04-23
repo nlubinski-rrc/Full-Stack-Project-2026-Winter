@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import * as ActorService from "../services/actorService";
 import type { Actor } from "../types/actor";
+import { useAuth } from "@clerk/clerk-react";
 
 export function useActors(
     dependencies: unknown[],
     filterFn?: ((actor: Actor) => boolean) | null
 ) {
+    const {getToken, isSignedIn} = useAuth();
     const [actors, updateActors] = useState<Actor[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [refreshKey, setRefreshKey] = useState<number>(0);
@@ -13,7 +15,14 @@ export function useActors(
     async function toggleFavouriteActor(actorId: number) {
         try {
             setError(null);
-            await ActorService.toggleFavouriteActor(actorId);
+            const sessionToken = isSignedIn? await getToken() : null;
+
+            if (!sessionToken) {
+                throw new Error("Not Authorized");
+            } else {
+                await ActorService.toggleFavouriteActor(actorId, sessionToken);
+            }
+
             setRefreshKey(key => key + 1);
         } catch (errorObject) {
             setError(`${errorObject}`);
@@ -26,7 +35,8 @@ export function useActors(
         async function fetchActors() {
             try {
                 setError(null);
-                let result = await ActorService.fetchActors();
+                const sessionToken = isSignedIn? await getToken() : null;
+                let result = await ActorService.fetchActors(sessionToken);
 
                 if (!ignore && filterFn) {
                     result = result.filter(filterFn);
