@@ -22,14 +22,14 @@ export function useReviews() {
     async function addReview(newReview: Omit<reviewType, "Id">) {
         const created = {
             ...newReview,
-            Id: crypto.randomUUID()
+            Id: Math.floor(Math.random() * 1000000)
         };
 
         const saved = await reviewService.addReview(created);
         setReviews((prev) => [...prev, saved]);
     }
 
-    async function deleteReview(reviewId: string) {
+    async function deleteReview(reviewId: number) {
         await reviewService.deleteReview(reviewId);
         setReviews((prev) => prev.filter((review) => review.Id !== reviewId));
     }
