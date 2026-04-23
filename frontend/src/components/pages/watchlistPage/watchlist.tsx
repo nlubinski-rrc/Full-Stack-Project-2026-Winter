@@ -3,9 +3,10 @@ import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 import MovieCard from "../../common/movieCard/movieCard";
 import { useWatchlist } from "../../../hooks/useWatchlist";
 import { useCallback } from "react";
+import { ClipLoader } from "react-spinners";
 
 function WatchlistPage() {
-    const { watchlist, removeFromWatchlist, addToWatchlist } = useWatchlist([]);
+    const { watchlist, removeFromWatchlist, addToWatchlist, loading } = useWatchlist([]);
     function removeWatchlistItem(movieId: number) {
         removeFromWatchlist(movieId);
     }
@@ -18,21 +19,27 @@ function WatchlistPage() {
         [addToWatchlist]
     );
 
-    const movieListItems =
-        watchlist.length === 0 ? (
-            <p className="no-movies-text">No movies in watchlist</p>
-        ) : (
-            watchlist.map((movie) => (
-                <div key={movie.id}>
-                    <MovieCard
-                        movie={[movie.title, movie.averageRating.toString(), movie.overview]}
-                    />
-                    <button type="button" onClick={() => removeWatchlistItem(movie.id)}>
-                        Remove
-                    </button>
-                </div>
-            ))
-        );
+    const movieListItems = loading ? (
+        <ClipLoader
+            id="watchlist-loading"
+            loading={loading}
+            color="#FFFFFF"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+        />
+    ) : watchlist.length === 0 ? (
+        <p className="no-movies-text">No movies in watchlist</p>
+    ) : (
+        watchlist.map((movie) => (
+            <div key={movie.id}>
+                <MovieCard movie={[movie.title, movie.averageRating.toString(), movie.overview]} />
+                <button type="button" onClick={() => removeWatchlistItem(movie.id)}>
+                    Remove
+                </button>
+            </div>
+        ))
+    );
 
     return (
         <div id="watchlist-page">

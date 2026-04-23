@@ -16,6 +16,7 @@ import { useAuth } from "@clerk/clerk-react";
 export function useWatchlist(dependencies: unknown[]) {
     const [watchlist, updateWatchlist] = useState<Movie[]>([]);
     const [err, setErr] = useState<string | null>();
+    const [loading, setLoading] = useState<boolean>(false);
     const [refreshKey, setRefreshKey] = useState<number>(0);
     const { getToken, isSignedIn } = useAuth();
 
@@ -35,8 +36,10 @@ export function useWatchlist(dependencies: unknown[]) {
 
     const addToWatchlist = async (movieId: number) => {
         try {
+            setLoading(true);
             if (watchlist.some((m) => Number(m.id) === Number(movieId))) {
                 alert("Movie already in watchlist");
+                setLoading(false);
                 return;
             }
 
@@ -44,8 +47,10 @@ export function useWatchlist(dependencies: unknown[]) {
             await WatchlistService.addToWatchlist(movieId, sessionToken);
 
             setRefreshKey((key) => key + 1);
+            setLoading(false);
         } catch (err: any) {
             setErr(err.message);
+            setLoading(false);
         }
     };
 
@@ -54,6 +59,7 @@ export function useWatchlist(dependencies: unknown[]) {
 
         const fetchWatchlist = async () => {
             try {
+                setLoading(true);
                 let sessionToken = isSignedIn ? await getToken() : null;
                 let result = await WatchlistService.fetchWatchlist(sessionToken);
                 const formattedMovies: Movie[] = [];
@@ -71,9 +77,11 @@ export function useWatchlist(dependencies: unknown[]) {
                 if (!ignore) {
                     updateWatchlist([...formattedMovies]);
                 }
+                setLoading(false);
                 console.log(watchlist);
             } catch (errorObject) {
                 setErr(`${errorObject}`);
+                setLoading(false);
             }
         };
 
@@ -89,5 +97,6 @@ export function useWatchlist(dependencies: unknown[]) {
         removeFromWatchlist,
         addToWatchlist,
         err,
+        loading,
     };
 }
