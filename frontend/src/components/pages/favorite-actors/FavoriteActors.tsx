@@ -1,31 +1,20 @@
-import type { Watchlist } from "../../../types/watchlistType.ts";
 import ActorListDisplay from "../../common/actor-list-display/ActorListDisplay.tsx";
 import "./favoriteActors.css";
 import type { JSX } from "react";
 import { useActors } from "../../../hooks/useActors.ts";
+import { useWatchlist } from "../../../hooks/useWatchlist.ts";
 
-function FavoriteActorsPage({
-    userWatchlist,
-    setWatchlist,
-}: {
-    userWatchlist: Watchlist;
-    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
-}) {
-
+function FavoriteActorsPage() {
+    const { watchlist, removeFromWatchlist } = useWatchlist([]);
     const { actors, error, toggleFavouriteActor } = useActors([]);
 
-    const watchListItems: JSX.Element[] = userWatchlist.watchlistItems.map((movie) => {
+    const watchListItems: JSX.Element[] = watchlist.map((movie) => {
         return (
-            <li id="watchListItem" key={movie.movieId}>
-                {movie.movieTitle}
+            <li id="watchListItem" key={movie.id}>
+                {movie.title}
                 <button
                     onClick={() => {
-                        const newList = userWatchlist.watchlistItems.filter(
-                            (filteredMovie) => filteredMovie.movieId != movie.movieId
-                        );
-                        setWatchlist({
-                            watchlistItems: newList,
-                        });
+                        removeFromWatchlist(movie.id);
                     }}
                 >
                     Remove
@@ -36,26 +25,28 @@ function FavoriteActorsPage({
 
     return (
         <div id="fav-actors-container">
-            {error ? <span>Something went wrong: ({error})</span>:
-            <>
-            <section>
-                <ActorListDisplay
-                    actors={actors.filter((a) => !a.isFavorite)}
-                    onSaveClick={toggleFavouriteActor}
-                />
-            </section>
-            <section>
-                <ActorListDisplay
-                    actors={actors.filter((a) => a.isFavorite)}
-                    onSaveClick={toggleFavouriteActor}
-                />
-            </section>
-            <section id="watchListContainer">
-                <h3>Your Watchlist</h3>
-                <ul>{watchListItems}</ul>
-            </section>
-            </>
-            }
+            {error ? (
+                <span>Something went wrong: ({error})</span>
+            ) : (
+                <>
+                    <section>
+                        <ActorListDisplay
+                            actors={actors.filter((a) => !a.isFavorite)}
+                            onSaveClick={toggleFavouriteActor}
+                        />
+                    </section>
+                    <section>
+                        <ActorListDisplay
+                            actors={actors.filter((a) => a.isFavorite)}
+                            onSaveClick={toggleFavouriteActor}
+                        />
+                    </section>
+                    <section id="watchListContainer">
+                        <h3>Your Watchlist</h3>
+                        <ul>{watchListItems}</ul>
+                    </section>
+                </>
+            )}
         </div>
     );
 }

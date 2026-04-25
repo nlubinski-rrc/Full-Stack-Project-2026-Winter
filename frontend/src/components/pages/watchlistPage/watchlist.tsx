@@ -1,48 +1,51 @@
 import "./watchlist.css";
-import type { Watchlist } from "../../../types/watchlistType";
 import MovieSearchBar from "../../common/MovieSearchBar/MovieSearchBar";
 import MovieCard from "../../common/movieCard/movieCard";
+import { useWatchlist } from "../../../hooks/useWatchlist";
+import { useCallback } from "react";
+import { ClipLoader } from "react-spinners";
 
-type WatchListProps = {
-    watchlist: Watchlist;
-    setWatchlist: React.Dispatch<React.SetStateAction<Watchlist>>;
-};
-
-function WatchlistPage({ watchlist, setWatchlist }: WatchListProps) {
-    function removeFromWatchlist(movieId: number) {
-        const newWatchlistItems = watchlist.watchlistItems.filter(
-            (item) => item.movieId !== movieId
-        );
-
-        setWatchlist({
-            watchlistItems: newWatchlistItems,
-        });
+function WatchlistPage() {
+    const { watchlist, removeFromWatchlist, addToWatchlist, loading } = useWatchlist([]);
+    function removeWatchlistItem(movieId: number) {
+        removeFromWatchlist(movieId);
     }
+    console.log(watchlist);
 
-    const movieListItems =
-        watchlist.watchlistItems.length === 0 ? (
-            <p className="no-movies-text">No movies in watchlist</p>
-        ) : (
-            watchlist.watchlistItems.map((movie) => (
-                <div key={movie.movieId}>
-                    <MovieCard
-                        movie={[movie.movieTitle, "N/A", "No description available"]}
-                    />
-                    <button
-                        type="button"
-                        onClick={() => removeFromWatchlist(movie.movieId)}
-                    >
-                        Remove
-                    </button>
-                </div>
-            ))
-        );
+    const handleAddToWatchlist = useCallback(
+        (movieId: number) => {
+            return addToWatchlist(movieId);
+        },
+        [addToWatchlist]
+    );
+
+    const movieListItems = loading ? (
+        <ClipLoader
+            id="watchlist-loading"
+            loading={loading}
+            color="#FFFFFF"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+        />
+    ) : watchlist.length === 0 ? (
+        <p className="no-movies-text">No movies in watchlist</p>
+    ) : (
+        watchlist.map((movie) => (
+            <div key={movie.id}>
+                <MovieCard movie={[movie.title, movie.averageRating.toString(), movie.overview]} />
+                <button type="button" onClick={() => removeWatchlistItem(movie.id)}>
+                    Remove
+                </button>
+            </div>
+        ))
+    );
 
     return (
         <div id="watchlist-page">
             <h1 id="title-header">My Watchlist</h1>
             <div id="search-and-watchlist">
-                <MovieSearchBar addItemToList={setWatchlist} />
+                <MovieSearchBar addToWatchlist={handleAddToWatchlist} />
                 <div id="movies">{movieListItems}</div>
             </div>
         </div>

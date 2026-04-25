@@ -2,7 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as actorServices from "../services/actorServices";
 import { successResponse, errorResponse } from "../../../models/responseModel";
-import { Actor } from "../../../models/actorModel";
+import { FrontendActor } from "../types/frontendActor";
+import { ActorWithUsers } from "../types/actorWithUsers";
+// import { Actor } from "../../../models/actorModel";
+import { Actor } from "../../../../generated/prisma/client";
 
 export const getAllActors = async (
     req: Request,
@@ -10,9 +13,19 @@ export const getAllActors = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const actors: Actor[] = await actorServices.getAllActors();
+        const userId = req.userId;
+        const actors: ActorWithUsers[] = await actorServices.getAllActors();
+
+        const userActors: FrontendActor[] = actors.map(a => {
+            const {id, name} = a;
+            return {
+                id: id,
+                name: name,
+                isFavorite: (userId != null) && a.userActors.some(userActor => userActor.userId === userId)
+            }
+        }) 
         res.status(HTTP_STATUS.OK).json(
-            successResponse(actors, "Actors retrieved successfully")
+            successResponse(userActors, "Actors retrieved successfully")
         );
     } catch (error: unknown) {
         next(error);
@@ -28,11 +41,17 @@ export const getActorById = async (
         const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         const actorId = parseInt(idParam, 10);
 
-        const actor: Actor | null = await actorServices.getActorById(actorId);
+        const actor = await actorServices.getActorById(actorId);
 
         if (actor) {
+            const userId = req.userId;
+            const frontendActor: FrontendActor = {
+                id: actor.id,
+                name: actor.name,
+                isFavorite: (userId != null) && actor.userActors.some(userActor => userActor.userId === userId)
+            }
             res.status(HTTP_STATUS.OK).json(
-                successResponse(actor, "Actor retrieved successfully")
+                successResponse(frontendActor, "Actor retrieved successfully")
             );
         } else {
             res.status(HTTP_STATUS.BAD_REQUEST).json(
@@ -59,23 +78,25 @@ export const getActorById = async (
 //     }
 // };
 
-export const updateActor = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-        const actorId = parseInt(idParam, 10);
+// FAVOURITE ACTORS NOW HANDLED BY UserActor
+// 
+// export const updateActor = async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+// ): Promise<void> => {
+//     try {
+//         const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+//         const actorId = parseInt(idParam, 10);
 
-        const updatedActor: Actor = await actorServices.updateActor(actorId, req.body);
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(updatedActor, "Actor updated successfully")
-        );
-    } catch (error: unknown) {
-        next(error);
-    }
-};
+//         const updatedActor: Actor = await actorServices.updateActor(actorId, req.body);
+//         res.status(HTTP_STATUS.OK).json(
+//             successResponse(updatedActor, "Actor updated successfully")
+//         );
+//     } catch (error: unknown) {
+//         next(error);
+//     }
+// };
 
 // export const deleteActor = async (
 //     req: Request,

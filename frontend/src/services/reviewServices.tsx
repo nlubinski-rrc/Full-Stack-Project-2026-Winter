@@ -5,10 +5,10 @@ export async function fetchReviews() {
     return reviewRepository.fetchReviews();
 }
 
-export async function addReview(review: Omit<reviewType, "Id">) {
+export async function addReview(review:reviewType) {
     return reviewRepository.createReviewRepository(review);
 }
 
-export async function deleteReview(reviewId: string) {
+export async function deleteReview(reviewId: number) {
     return reviewRepository.deleteReview(reviewId);
 }
